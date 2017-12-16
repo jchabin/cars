@@ -431,13 +431,13 @@ function join(){
 					for(var w in map.children){
 						var wall = map.children[w];
 						// console.log(wall.plane.distanceToPoint(play.model.position.clone().sub(wall.position)));
-						if(Math.abs(wall.plane.distanceToPoint(play.model.position.clone().sub(wall.position))) < 0.75){
-							if(wall.position.clone().distanceTo(play.model.position) < wall.width / 2 + 0.75){
+						if(Math.abs(wall.plane.distanceToPoint(play.model.position.clone().sub(wall.position))) < 1){
+							if(wall.position.clone().distanceTo(play.model.position) < wall.width / 2 + 1){
 								var vel = new THREE.Vector3(play.data.xv, 0, play.data.yv);
 								vel.reflect(wall.plane.normal);
 								play.data.xv = vel.x;
 								play.data.yv = vel.z;
-								while(Math.abs(wall.plane.distanceToPoint(new THREE.Vector3(play.data.x, 0, play.data.y).sub(wall.position))) < 0.75){
+								while(Math.abs(wall.plane.distanceToPoint(new THREE.Vector3(play.data.x, 0, play.data.y).sub(wall.position))) < 1){
 									play.data.x += play.data.xv;
 									play.data.y += play.data.yv;
 								}
@@ -459,7 +459,7 @@ function join(){
 // 					}
 					
 					for(var pl in players){
-						if(play != players[pl] && play.model.position.distanceTo(players[pl].model.position) < 0.75){
+						if(play != players[pl] && play.model.position.distanceTo(players[pl].model.position) < 1){
 							var temp = new THREE.Vector2();
 							temp.x = COLLISION * (players[pl].data.xv - play.data.xv);
 							temp.y = COLLISION * (players[pl].data.yv - play.data.yv);
