@@ -683,7 +683,8 @@ codeCheck = function(){
 						}, 4000);
 					}
 				});
-			}
+			}else
+				incode.onkeyup = codeCheck;
 		});
 	}else{
 		incode.onkeyup = codeCheck;
