@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href="https://fonts.googleapis.com/css?family=Monoton|Press+Start+2P" rel="stylesheet">
+		<link href="style.css" rel="stylesheet">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/86/three.min.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+	</head>
+	<body>
+	<div id="trackcode" class="data">
+		1,-5/1,2 1,2/0,4 0,4/-1,5 -1,5/-3,6 -3,6/-7,6 -7,6/-9,5 -9,5/-10,4 -10,4/-11,2 -11,2/-11,-4 -11,-4/-10,-5 -10,-5/-8,-5 -8,-5/-7,-4 -7,-4/-7,-1 -7,-4/-6,-5 -6,-5/-4,-5 -4,-5/-3,-4 -3,-6/-3,-1 -3,-6/-2,-8 -2,-8/-1,-9 -1,-9/1,-10 1,-10/5,-10 5,-10/7,-9 7,-9/8,-8 8,-8/9,-6 9,-6/9,-1 9,-1/8,1 8,1/6,2 6,2/4,2 4,2/2,1 2,1/1,-1 -1,-5/0,-7 0,-7/2,-8 2,-8/4,-8 4,-8/6,-7 6,-7/7,-5 7,-5/7,-1 7,-1/6,0 6,0/4,0 4,0/3,-1 3,-1/3,-4 -1,-5/-1,1 -1,1/-2,3 -2,3/-4,4 -4,4/-6,4 -6,4/-8,3 -8,3/-9,1 -9,1/-9,-3 -9,0/-8,1 -8,1/-6,1 -6,1/-5,0 -5,0/-5,-3 -5,0/-4,1 -4,1/-2,1 -2,1/-1,0 1,-5/2,-6 2,-6/4,-6 4,-6/5,-5 5,-5/5,-2
+	</div>
+	<div id="trees" class="data">
+		-2,2 -5,1 -7,2 -6,3 0,5 -1,8 -3,7 -4,7 -6,7 -6,9 -9,8 -12,7 -13,5 -11,5 -13,2 -14,0 -13,-2 -15,-3 -13,-6 -10,-7 -7,-5 -3,-9 -3,-11 0,-12 3,-13 5,-11 8,-10 9,-8 10,-6 12,-5 11,-3 12,-4 10,-1 11,2 9,2 2,3 4,5 6,4 8,5
+	</div>x
+	<div id="startdata" class="data">
+		-1,1/1,1 3,-8/3,-10
+	</div>
+	<div id="fore">
+		<div class="title" id="title">Online Racing Game!</div>
+		<div class="menuitem title">Pick a name:<br/><input id="name" class="title" ontouchstart="this.focus()" placeholder="Name"></input></div>
+		<script>
+			var color, updateColor, menu2, host, joinGame, codeCheck;
+		</script>
+		<div class="menuitem title">Choose a color:<br/><div id="colorpicker" ontouchstart="event.touches[0].buttons = 1; this.onmousemove(event.touches[0])" ontouchmove="event.touches[0].buttons = 1; this.onmousemove(event.touches[0])" onmousedown="this.onmousemove(event)" onmousemove="if(event.buttons == 1){ var x = event.clientX - this.getBoundingClientRect().left; x = Math.min(this.clientWidth, Math.max(0, x)); color = Math.floor(x / this.clientWidth * 360); updateColor(); }"><div id="slider"></div></div></div>
+		<div class="menuitem title"><div id="start" onclick="menu2()" ontouchstart="this.click()">Start!</div></div>
+	</div>
+	<script src="script.js"></script>
+	</body>
+</html>
