@@ -1,0 +1,219 @@
+html{
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+body{
+	margin: 0;
+	padding: 0;
+	background-color: white;
+	height: 100vh;
+}
+input{
+	border-radius: 0 !important;
+}
+.data{
+	display: none;
+}
+#fore{
+	transition: transform .5s ease-in-out;
+	text-align: center;
+}
+.title{
+	font-family: Monoton;
+}
+#title{
+	color: white;
+	font-size: 10vmin;
+	text-shadow: 0 0 1vmin black;
+	text-align: center;
+	transform: translate3d(0, -100vh, 0);
+	transition: transform .5s ease-out;
+/* 	animation: slidetop 0.5s ease-out forwards; */
+}
+/* @keyframes slidetop{
+	0%{transform: translate3d(0, -100vh, 0)}
+}
+@keyframes leavetop{
+	100%{transform: translate3d(0, -100vh, 0)}
+}
+@keyframes slideleft{
+	0%{transform: translate3d(-100vw, 0, 0)}
+	50%{transform: translate3d(-100vw, 0, 0)}
+}
+@keyframes slideright{
+	0%{transform: translate3d(100vw, 0, 0)}
+	50%{transform: translate3d(100vw, 0, 0)}
+} */
+.menuitem{
+	color: white;
+	font-size: 7vmin;
+	text-align: center;
+	text-shadow: 0 0 1vmin black;
+	transform: translate3d(-100vw, 0, 0);
+	transition: transform .5s ease-out;
+/* 	animation: slideleft 1s -0.5s ease-out forwards; */
+}
+#name{
+	background-color: rgba(0, 0, 0, 0.5);
+	outline: none;
+	border: 1vmin solid white;
+	font-size: 10vmin;
+	text-align: center;
+	color: white;
+	padding: 1vmin;
+	width: 60vw;
+}
+#colorpicker{
+	margin: 0;
+	padding: 0;
+	width: 80vw;
+	height: 5vmin;
+	background: linear-gradient(90deg,
+		hsl(0, 100%, 50%),
+		hsl(60, 100%, 50%),
+		hsl(120, 100%, 50%),
+		hsl(180, 100%, 50%),
+		hsl(240, 100%, 50%),
+		hsl(300, 100%, 50%),
+		hsl(360, 100%, 50%)
+	);
+	border-radius: 3.5vmin;
+	border: 1vmin solid white;
+	display: inline-block;
+	cursor: pointer;
+}
+#slider{
+	margin: 0;
+	padding: 0;
+	width: 7vmin;
+	height: 7vmin;
+	border: 1vmin solid white;
+	border-radius: 4.5vmin;
+	transform: translate(-4.5vmin, -2vmin);
+	cursor: pointer;
+	box-shadow: 0 0 1vmin black;
+	transition: transform .2s;
+}
+#slider:hover{
+	transform: translate(-4.5vmin, -2vmin) scale(1.2);
+}
+#start{
+/* 	animation: slideleft 1s -0.25s forwards; */
+	font-size: 10vmin;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: inline-block;
+	border: 1vmin solid white;
+	padding: 2vmin;
+	cursor: pointer;
+	transition: transform .2s, box-shadow .2s;
+	text-shadow: none;
+	box-shadow: 0 2vmin 3vmin rgba(0, 0, 0, 0.5);
+}
+#start:hover{
+	transform: scale(0.9);
+	box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.5);
+}
+.button{
+	border: 1vmin solid white;
+	padding: 2vmin;
+	font-size: 10vmin !important;
+	background-color: rgba(0, 0, 0, 0.5);
+	position: absolute;
+	width: 80vmin;
+	left: calc(50vw - 43vmin);
+	text-shadow: none;
+	line-height: 10vmin;
+	cursor: pointer;
+	box-shadow: 0 2vmin 3vmin rgba(0, 0, 0, 0.5);
+	transition: transform .2s, box-shadow .2s;
+}
+.button:hover{
+	transform: scale(0.9) !important;
+	box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.5);
+}
+#host{
+	top: calc(30vh - 8vmin);
+	transform: translate3d(-100vw, 0, 0);
+	transition: transform .5s ease-out, box-shadow .2s;
+/* 	-webkit-transform-style: preserve-3d; */
+/* 	animation: slideleft 1s -0.5s ease-out forwards; */
+}
+#join{
+	top: calc(70vh - 8vmin);
+	transform: translate3d(-100vw, 0, 0);
+	transition: transform .5s ease-out, box-shadow .2s;
+/* 	-webkit-transform-style: preserve-3d; */
+/* 	animation: slideleft 1s ease-out forwards; */
+}
+.info{
+	position: absolute;
+	top: 0;
+	left: 0;
+	color: white;
+	font-size: 5vmin;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	width: 100%;
+	border-bottom: 1vmin solid white;
+	z-index: 100000;
+}
+#code{
+	text-align: center;
+	font-size: 20vmin;
+	text-shadow: 0 0 2vmin white;
+}
+#incode{
+	text-align: center;
+	font-size: 20vmin;
+	text-shadow: 0 0 2vmin white;
+	outline: none;
+	border: none;
+	width: 80vw;
+	color: white;
+	background: none;
+	background-color: rgba(0, 0, 0, 0.5);
+	text-transform: uppercase;
+}
+#startgame{
+	position: absolute;
+	bottom: 5vmin;
+	right: 5vmin;
+	color: white;
+	border: 1vmin solid white;
+	background-color: rgba(0, 0, 0, 0.5);
+	cursor: pointer;
+	font-size: 10vmin;
+	padding: 2vmin;
+	transition: box-shadow .2s, transform .2s;
+	box-shadow: 0 2vmin 3vmin rgba(0, 0, 0, 0.5);
+	z-index: 100000;
+}
+#startgame:hover{
+	box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.5);
+	transform: scale(0.9);
+}
+.label{
+	font-family: "Press Start 2P";
+	color: white;
+	text-shadow: 0 0 1vmin black;
+	display: inline-block;
+	padding: 2vmin;
+	position: absolute;
+	font-size: 3vmin;
+	transform: translateX(-50%) translateY(-100%);
+	text-align: center;
+	line-height: 4vmin;
+	z-index: 0;
+}
+#countdown{
+	font-size: 50vmin;
+	height: 70vmin;
+	width: 100vw;
+	position: absolute;
+	top: calc(50vh - 35vmin);
+	line-height: 70vmin;
+	color: white;
+	text-shadow: 0 0 2vmin white;
+	z-index: 100000;
+}
