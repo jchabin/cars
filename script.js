@@ -541,7 +541,7 @@ codeCheck = function(){
 		incode.onkeyup = null;
 		code = incode.value.toUpperCase();
 		database.ref(code).once("value", function(cc){
-			if(typeof cc.val() != "undefined" || cc.val().status === 0){
+			if(typeof cc.val() != "undefined" && cc.val() != null cc.val().status === 0){
 				document.getElementsByClassName("info")[0].innerHTML = "<div class='info title'>Waiting for the game to start...<div id='code'>" + code + "</div></div>";
 				var playerCount = 0;
 				for(var p in cc.val().players){
