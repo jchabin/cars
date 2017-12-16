@@ -473,6 +473,11 @@ function join(){
 							players[pl].data.y += play.data.yv;
 						}
 					}
+					
+					if(play.model.position.distanceTo(new THREE.Vector3()) > 150){
+						play.data.x = 0;
+						play.data.y = 0;
+					}
 				}
 			}
 			
