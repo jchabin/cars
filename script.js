@@ -555,7 +555,7 @@ function join(){
 			me.model.visible = false;
 			cubeCamera.updateCubeMap(renderer, scene);
 			cubeCamera.position.copy(me.model.position);
-			me.model.visible = true;x
+			me.model.visible = true;
 		}
 		
 		renderer.render(scene, camera);
