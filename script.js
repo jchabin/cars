@@ -92,7 +92,7 @@ updateColor();
 
 menu2 = function(){
 	if(document.getElementById("name").value == "")
-		name = "Anonymous";
+		name = "Nerd with No Name";
 	else
 		name = document.getElementById("name").value;
 	f.style.transform = "translate3d(0, -100vh, 0)";
@@ -478,6 +478,11 @@ function join(){
 						}
 					}
 					
+					if(play.data.lap > 3){
+						document.getElementById("countdown").style.fontSize = "25vmin";
+						document.getElementById("countdown").innerHTML = play.data.name + " Won!";
+					}
+					
 					for(var pl in players){
 						if(play != players[pl] && play.model.position.distanceTo(players[pl].model.position) < 1){
 							var temp = new THREE.Vector2();
@@ -515,7 +520,7 @@ function join(){
 			
 			me.ref.set(me.data);
 			
-			lap.innerHTML = me.data.lap + "/3";
+			lap.innerHTML = me.data.lap <= 3 ? me.data.lap + "/3" : "";
 		}else{
 			camera.position.set(10 * Math.sin(x), 3, 10 * Math.cos(x));
 			camera.lookAt(player.position);
@@ -545,10 +550,13 @@ function join(){
 			onWindowResize();
 		}
 		
-		me.model.visible = false;
-		cubeCamera.updateCubeMap(renderer, scene);
-		cubeCamera.position.copy(me.model.position);
-		me.model.visible = true;
+		if(shiny){
+			me.model.material = shinymat;
+			me.model.visible = false;
+			cubeCamera.updateCubeMap(renderer, scene);
+			cubeCamera.position.copy(me.model.position);
+			me.model.visible = true;x
+		}
 		
 		renderer.render(scene, camera);
 	}
