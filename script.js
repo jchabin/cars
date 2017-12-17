@@ -522,7 +522,7 @@ function join(){
 			
 			lap.innerHTML = me.data.lap <= 3 ? me.data.lap + "/3" : "";
 		}else{
-			camera.position.set(10 * Math.sin(x), 3, 10 * Math.cos(x));
+			camera.position.set(50 * Math.sin(x), 20, 50 * Math.cos(x));
 			camera.lookAt(player.position);
 		}
 		
