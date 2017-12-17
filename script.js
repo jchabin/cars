@@ -66,7 +66,7 @@ function toggleFullScreen() {
 	window.scrollTo(0,1);
 }
 
-var name, code, players = {}, me = {}, gameStarted = false, gameSortaStarted = false, left = false, right = false;
+var name, code, players = {}, me = {}, gameStarted = false, gameSortaStarted = false, left = false, right = false, lap;
 var carPos = [
 	{x: 0, y: 0},
 	{x: 2, y: 0},
@@ -198,6 +198,8 @@ host = function(){
 					steer: 0,
 					color: color,
 					name: name,
+					checkpoint: 1,
+					lap: 0,
 					collision: {}
 				}
 				me.ref.set(me.data);
@@ -216,6 +218,12 @@ host = function(){
 						countDown.className = "title";
 						countDown.id = "countdown";
 						f.appendChild(countDown);
+						
+						lap = document.createElement("DIV");
+						lap.innerHTML = "1/3";
+						lap.className = "title";
+						lap.id = "lap";
+						f.appendChild(lap);
 						
 						setTimeout(function(){
 							countDown.innerHTML = "2";
@@ -447,16 +455,21 @@ function join(){
 						}
 					}
 					
-// 					for(var i in startc.children){
-// 						var cp = startc[i];
-// 						if(Math.abs(cp.plane.distanceToPoint(play.model.position.clone().sub(cp.position))) < 0.75){
-// 							if(cp.position.clone().distanceTo(play.model.position) < cp.width / 2 + 0.75){
-// 								if(i == 0){
-									
-// 								}
-// 							}
-// 						}
-// 					}
+					for(var i in startc.children){
+						var cp = startc.children[i];
+						if(Math.abs(cp.plane.distanceToPoint(play.model.position.clone().sub(cp.position))) < 1){
+							if(cp.position.clone().distanceTo(play.model.position) < cp.width / 2 + 1){
+								// console.log(i);
+								if(i == 0){
+									if(play.data.checkpoint == 1){
+										play.data.checkpoint = 0;
+										play.data.lap++;
+									}
+								}else
+									play.data.checkpoint = 1;
+							}
+						}
+					}
 					
 					for(var pl in players){
 						if(play != players[pl] && play.model.position.distanceTo(players[pl].model.position) < 1){
@@ -494,6 +507,8 @@ function join(){
 			camera.lookAt(me.model.position);
 			
 			me.ref.set(me.data);
+			
+			lap.innerHTML = me.data.lap + "/3";
 		}else{
 			camera.position.set(10 * Math.sin(x), 3, 10 * Math.cos(x));
 			camera.lookAt(player.position);
@@ -652,6 +667,8 @@ codeCheck = function(){
 					steer: 0,
 					color: color,
 					name: name,
+					checkpoint: 1,
+					lap: 0,
 					collision: {}
 				}
 				me.ref.set(me.data);
