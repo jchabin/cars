@@ -212,10 +212,13 @@ input{
 	width: 100vw;
 	position: absolute;
 	top: calc(50vh - 35vmin);
-	line-height: 70vmin;
 	color: white;
 	text-shadow: 0 0 2vmin white;
 	z-index: 100000;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center; 
+	line-height: 23vmin;
 }
 #lap{
 	font-size: 10vmin;
