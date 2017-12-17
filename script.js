@@ -3,6 +3,7 @@ var CAMERA_LAG = 0.9;
 var COLLISION = 1.5;
 var BOUNCE = 0.9;
 const MAP_SCALE = 5;
+var shiny = false;
 
 setTimeout(function(){
 	document.getElementById("title").style.transform = "none";
@@ -35,6 +36,7 @@ renderer = new THREE.WebGLRenderer();
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 var element = renderer.domElement;
+var shinymat;
 
 var mobile = navigator.userAgent.match("Mobile")!=null||navigator.userAgent.match("Linux;")!=null;
 
@@ -145,10 +147,10 @@ host = function(){
 					};
 					var pl = players[p.ge.path.n[2]];
 					pl.model.position.set(pl.data.x, 0.6, pl.data.y);
-					pl.model.material = new THREE.MeshLambertMaterial({color: new THREE.Color("hsl(" + pl.data.color + ", 100%, 50%)")});
+					pl.model.material = shiny ? shinymat : new THREE.MeshLambertMaterial({color: new THREE.Color("hsl(" + pl.data.color + ", 100%, 50%)")});
 					var wheel = new THREE.Mesh(
 						new THREE.CylinderBufferGeometry(0.5, 0.5, 0.2, 10),
-						new THREE.MeshLambertMaterial({color: new THREE.Color("#222")})
+						shiny ? shinymat : new THREE.MeshLambertMaterial({color: new THREE.Color("#222")})
 					);
 					var w1 = wheel.clone();
 					w1.position.set(0.6, -0.1, 0.7);
@@ -262,6 +264,11 @@ joinGame = function(){
 }
 
 function join(){
+	var cubeCamera = new THREE.CubeCamera(1, 100, 128);
+	scene.add(cubeCamera);
+	
+	shinymat = new THREE.MeshBasicMaterial({envMap: cubeCamera.renderTarget});
+	
 	var racedata = document.getElementById("trackcode").innerHTML.trim().split(" ");
 	var material = new THREE.MeshLambertMaterial({color: new THREE.Color(0xf48342), side: THREE.DoubleSide});
 	var mapscale = 7;
@@ -538,6 +545,11 @@ function join(){
 			onWindowResize();
 		}
 		
+		me.model.visible = false;
+		cubeCamera.updateCubeMap(renderer, scene);
+		cubeCamera.position.copy(me.model.position);
+		me.model.visible = true;
+		
 		renderer.render(scene, camera);
 	}
 	
@@ -573,10 +585,10 @@ codeCheck = function(){
 					};
 					var pl = players[p];
 					pl.model.position.set(pl.data.x, 0.6, pl.data.y);
-					pl.model.material = new THREE.MeshLambertMaterial({color: new THREE.Color("hsl(" + pl.data.color + ", 100%, 50%)")});
+					pl.model.material = shiny ? shinymat : new THREE.MeshLambertMaterial({color: new THREE.Color("hsl(" + pl.data.color + ", 100%, 50%)")});
 					var wheel = new THREE.Mesh(
 						new THREE.CylinderBufferGeometry(0.5, 0.5, 0.2, 10),
-						new THREE.MeshLambertMaterial({color: new THREE.Color("#222")})
+						shiny ? shinymat : new THREE.MeshLambertMaterial({color: new THREE.Color("#222")})
 					);
 					var w1 = wheel.clone();
 					w1.position.set(0.6, -0.1, 0.7);
@@ -613,10 +625,10 @@ codeCheck = function(){
 						};
 						var pl = players[p.ge.path.n[2]];
 						pl.model.position.set(pl.data.x, 0.6, pl.data.y);
-						pl.model.material = new THREE.MeshLambertMaterial({color: new THREE.Color("hsl(" + pl.data.color + ", 100%, 50%)")});
+						pl.model.material = shiny ? shinymat : new THREE.MeshLambertMaterial({color: new THREE.Color("hsl(" + pl.data.color + ", 100%, 50%)")});
 						var wheel = new THREE.Mesh(
 							new THREE.CylinderBufferGeometry(0.5, 0.5, 0.2, 10),
-							new THREE.MeshLambertMaterial({color: new THREE.Color("#222")})
+							shiny ? shinymat : new THREE.MeshLambertMaterial({color: new THREE.Color("#222")})
 						);
 						var w1 = wheel.clone();
 						w1.position.set(0.6, -0.1, 0.7);
