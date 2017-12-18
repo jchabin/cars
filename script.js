@@ -711,6 +711,12 @@ codeCheck = function(){
 						countDown.id = "countdown";
 						f.appendChild(countDown);
 						
+						lap = document.createElement("DIV");
+						lap.innerHTML = "1/3";
+						lap.className = "title";
+						lap.id = "lap";
+						f.appendChild(lap);
+						
 						setTimeout(function(){
 							countDown.innerHTML = "2";
 						}, 1000);
