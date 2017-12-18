@@ -40,6 +40,8 @@ var shinymat;
 
 var mobile = navigator.userAgent.match("Mobile")!=null||navigator.userAgent.match("Linux;")!=null;
 
+
+
 window.ontouchstart = function(e){
 	e.preventDefault();
 }
@@ -115,6 +117,7 @@ menu2 = function(){
 }
 
 host = function(){
+	document.getElementById("host").onclick = null;
 	f.style.transform = "translate3d(0, -100vh, 0)";
 	setTimeout(function(){
 		f.innerHTML = "<div class='info title'>Use this code to join the game!<div id='code'>Loading...</div></div><div id='startgame' class='title' onclick='startGame()' ontouchstart='this.click()'>Start!</div>";
@@ -254,6 +257,7 @@ host = function(){
 }
 
 joinGame = function(){
+	document.getElementById("join").onclick = null;
 	f.style.transform = "translate3d(0, -100vh, 0)";
 	setTimeout(function(){
 		f.innerHTML = "<div class='info title'>Enter a code to join a game!<input id='incode' class='title' onkeyup='codeCheck(event)' ontouchstart='this.focus()'></input></div>";
@@ -755,6 +759,8 @@ window.onkeyup = function(e){
 
 if(mobile){
 	window.ondeviceorientation = function(e){
-		me.data.steer = Math.max(Math.min(e.beta / 180 * Math.PI, Math.PI / 6), -Math.PI / 6);
+		var angle = orientation == 0 ? e.gamma : orientation < 0 ? -e.beta : e.beta;
+		// document.body.innerHTML = angle;
+		me.data.steer = Math.max(Math.min((angle) / 180 * Math.PI, Math.PI / 6), -Math.PI / 6);
 	}
 }
