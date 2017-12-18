@@ -16,7 +16,10 @@ input{
 	display: none;
 }
 #fore{
+	-webkit-transition: -webkit-transform .5s ease-in-out;
+	transition: -webkit-transform .5s ease-in-out;
 	transition: transform .5s ease-in-out;
+	transition: transform .5s ease-in-out, -webkit-transform .5s ease-in-out;
 	text-align: center;
 }
 .title{
@@ -27,8 +30,12 @@ input{
 	font-size: 10vmin;
 	text-shadow: 0 0 1vmin black;
 	text-align: center;
-	transform: translate3d(0, -100vh, 0);
+	-webkit-transform: translate3d(0, -100vh, 0);
+	        transform: translate3d(0, -100vh, 0);
+	-webkit-transition: -webkit-transform .5s ease-out;
+	transition: -webkit-transform .5s ease-out;
 	transition: transform .5s ease-out;
+	transition: transform .5s ease-out, -webkit-transform .5s ease-out;
 /* 	animation: slidetop 0.5s ease-out forwards; */
 }
 /* @keyframes slidetop{
@@ -50,8 +57,12 @@ input{
 	font-size: 7vmin;
 	text-align: center;
 	text-shadow: 0 0 1vmin black;
-	transform: translate3d(-100vw, 0, 0);
+	-webkit-transform: translate3d(-100vw, 0, 0);
+	        transform: translate3d(-100vw, 0, 0);
+	-webkit-transition: -webkit-transform .5s ease-out;
+	transition: -webkit-transform .5s ease-out;
 	transition: transform .5s ease-out;
+	transition: transform .5s ease-out, -webkit-transform .5s ease-out;
 /* 	animation: slideleft 1s -0.5s ease-out forwards; */
 }
 #name{
@@ -69,6 +80,16 @@ input{
 	padding: 0;
 	width: 80vw;
 	height: 5vmin;
+	background: -webkit-gradient(linear,
+		left top, right top,
+		from(hsl(0, 100%, 50%)),
+		color-stop(hsl(60, 100%, 50%)),
+		color-stop(hsl(120, 100%, 50%)),
+		color-stop(hsl(180, 100%, 50%)),
+		color-stop(hsl(240, 100%, 50%)),
+		color-stop(hsl(300, 100%, 50%)),
+		to(hsl(360, 100%, 50%))
+	);
 	background: linear-gradient(90deg,
 		hsl(0, 100%, 50%),
 		hsl(60, 100%, 50%),
@@ -90,13 +111,19 @@ input{
 	height: 7vmin;
 	border: 1vmin solid white;
 	border-radius: 4.5vmin;
-	transform: translate(-4.5vmin, -2vmin);
+	-webkit-transform: translate(-4.5vmin, -2vmin);
+	        transform: translate(-4.5vmin, -2vmin);
 	cursor: pointer;
-	box-shadow: 0 0 1vmin black;
+	-webkit-box-shadow: 0 0 1vmin black;
+	        box-shadow: 0 0 1vmin black;
+	-webkit-transition: -webkit-transform .2s;
+	transition: -webkit-transform .2s;
 	transition: transform .2s;
+	transition: transform .2s, -webkit-transform .2s;
 }
 #slider:hover{
-	transform: translate(-4.5vmin, -2vmin) scale(1.2);
+	-webkit-transform: translate(-4.5vmin, -2vmin) scale(1.2);
+	        transform: translate(-4.5vmin, -2vmin) scale(1.2);
 }
 #start{
 /* 	animation: slideleft 1s -0.25s forwards; */
@@ -106,13 +133,19 @@ input{
 	border: 1vmin solid white;
 	padding: 2vmin;
 	cursor: pointer;
+	-webkit-transition: -webkit-transform .2s, -webkit-box-shadow .2s;
+	transition: -webkit-transform .2s, -webkit-box-shadow .2s;
 	transition: transform .2s, box-shadow .2s;
+	transition: transform .2s, box-shadow .2s, -webkit-transform .2s, -webkit-box-shadow .2s;
 	text-shadow: none;
-	box-shadow: 0 2vmin 3vmin rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 2vmin 3vmin rgba(0, 0, 0, 0.5);
+	        box-shadow: 0 2vmin 3vmin rgba(0, 0, 0, 0.5);
 }
 #start:hover{
-	transform: scale(0.9);
-	box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.5);
+	-webkit-transform: scale(0.9);
+	        transform: scale(0.9);
+	-webkit-box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.5);
+	        box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.5);
 }
 .button{
 	border: 1vmin solid white;
@@ -125,24 +158,38 @@ input{
 	text-shadow: none;
 	line-height: 10vmin;
 	cursor: pointer;
-	box-shadow: 0 2vmin 3vmin rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 0 2vmin 3vmin rgba(0, 0, 0, 0.5);
+	        box-shadow: 0 2vmin 3vmin rgba(0, 0, 0, 0.5);
+	-webkit-transition: -webkit-transform .2s, -webkit-box-shadow .2s;
+	transition: -webkit-transform .2s, -webkit-box-shadow .2s;
 	transition: transform .2s, box-shadow .2s;
+	transition: transform .2s, box-shadow .2s, -webkit-transform .2s, -webkit-box-shadow .2s;
 }
 .button:hover{
-	transform: scale(0.9) !important;
-	box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.5);
+	-webkit-transform: scale(0.9) !important;
+	        transform: scale(0.9) !important;
+	-webkit-box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.5);
+	        box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.5);
 }
 #host{
 	top: calc(30vh - 8vmin);
-	transform: translate3d(-100vw, 0, 0);
+	-webkit-transform: translate3d(-100vw, 0, 0);
+	        transform: translate3d(-100vw, 0, 0);
+	-webkit-transition: -webkit-transform .5s ease-out, -webkit-box-shadow .2s;
+	transition: -webkit-transform .5s ease-out, -webkit-box-shadow .2s;
 	transition: transform .5s ease-out, box-shadow .2s;
+	transition: transform .5s ease-out, box-shadow .2s, -webkit-transform .5s ease-out, -webkit-box-shadow .2s;
 /* 	-webkit-transform-style: preserve-3d; */
 /* 	animation: slideleft 1s -0.5s ease-out forwards; */
 }
 #join{
 	top: calc(70vh - 8vmin);
-	transform: translate3d(-100vw, 0, 0);
+	-webkit-transform: translate3d(-100vw, 0, 0);
+	        transform: translate3d(-100vw, 0, 0);
+	-webkit-transition: -webkit-transform .5s ease-out, -webkit-box-shadow .2s;
+	transition: -webkit-transform .5s ease-out, -webkit-box-shadow .2s;
 	transition: transform .5s ease-out, box-shadow .2s;
+	transition: transform .5s ease-out, box-shadow .2s, -webkit-transform .5s ease-out, -webkit-box-shadow .2s;
 /* 	-webkit-transform-style: preserve-3d; */
 /* 	animation: slideleft 1s ease-out forwards; */
 }
@@ -185,13 +232,19 @@ input{
 	cursor: pointer;
 	font-size: 10vmin;
 	padding: 2vmin;
+	-webkit-transition: -webkit-box-shadow .2s, -webkit-transform .2s;
+	transition: -webkit-box-shadow .2s, -webkit-transform .2s;
 	transition: box-shadow .2s, transform .2s;
-	box-shadow: 0 2vmin 3vmin rgba(0, 0, 0, 0.5);
+	transition: box-shadow .2s, transform .2s, -webkit-box-shadow .2s, -webkit-transform .2s;
+	-webkit-box-shadow: 0 2vmin 3vmin rgba(0, 0, 0, 0.5);
+	        box-shadow: 0 2vmin 3vmin rgba(0, 0, 0, 0.5);
 	z-index: 100000;
 }
 #startgame:hover{
-	box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.5);
-	transform: scale(0.9);
+	-webkit-box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.5);
+	        box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.5);
+	-webkit-transform: scale(0.9);
+	        transform: scale(0.9);
 }
 .label{
 	font-family: "Press Start 2P";
@@ -201,7 +254,8 @@ input{
 	padding: 2vmin;
 	position: absolute;
 	font-size: 3vmin;
-	transform: translateX(-50%) translateY(-100%);
+	-webkit-transform: translateX(-50%) translateY(-100%);
+	        transform: translateX(-50%) translateY(-100%);
 	text-align: center;
 	line-height: 4vmin;
 	z-index: 0;
@@ -229,3 +283,4 @@ input{
 	top: 0;
 	left: 3vmin;
 }
+    
