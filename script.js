@@ -17,7 +17,7 @@ setTimeout(function(){
 setTimeout(function(){
 	document.getElementsByClassName("menuitem")[2].style.transform = "none";
 }, 1400);
-
+var connected = false;
 var config = {
 	apiKey: "AIzaSyDiJsMLlix5o9XqPW1EpeBvuA15XNjlR8M",
 	authDomain: "car-game-a86b9.firebaseapp.com",
@@ -27,8 +27,27 @@ var config = {
 	messagingSenderId: "722396856191"
 };
 firebase.initializeApp(config);
-
 var database = firebase.database();
+database.ref("/").once("value", function(e){
+	connected = true;
+});
+setTimeout(function(){
+	if(!connected){
+		console.log("Regular database not working, using backup database...");
+		config = {
+			apiKey: "AIzaSyCsqpn0aTDqU8ffGVE284fmSEOTK2tOgq8",
+			authDomain: "car-game-backup.firebaseapp.com",
+			databaseURL: "https://car-game-backup.firebaseio.com",
+			projectId: "car-game-backup",
+			storageBucket: "car-game-backup.appspot.com",
+			messagingSenderId: "1015722732476"
+		};
+		firebase.initializeApp(config, "backup");
+		database = firebase.apps[1].database();
+	}
+}, 1000);
+
+//var database = firebase.database();
 
 var camera, renderer, scene, renderer2, scene2, labels = []; 
 scene = new THREE.Scene();
