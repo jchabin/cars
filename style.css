@@ -26,6 +26,7 @@ input{
 	font-family: Monoton;
 }
 #title{
+	padding-top: 20px;
 	color: white;
 	font-size: 10vmin;
 	text-shadow: 0 0 1vmin black;
@@ -205,6 +206,9 @@ input{
 	border-bottom: 1vmin solid white;
 	z-index: 100000;
 }
+.info.title{
+	padding-top: 20px;
+}
 #code{
 	text-align: center;
 	font-size: 20vmin;
@@ -280,6 +284,6 @@ input{
 	color: white;
 	text-shadow: 0 0 2vmin white;
 	z-index: 100000;
-	top: 0;
+	top: 3vmin;
 	left: 3vmin;
 }
