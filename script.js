@@ -2,7 +2,7 @@ var SPEED = 0.004;
 var CAMERA_LAG = 0.9;
 var COLLISION = 1.5;
 var BOUNCE = 0.9;
-var MAP_SCALE = 5;
+var mapscale = 7;
 var shiny = false;
 
 setTimeout(function(){
@@ -309,7 +309,6 @@ function join(){
 	
 	var racedata = document.getElementById("trackcode").innerHTML.trim().split(" ");
 	var material = new THREE.MeshLambertMaterial({color: new THREE.Color(0xf48342), side: THREE.DoubleSide});
-	var mapscale = 7;
 	var map = new THREE.Object3D();
 	for(var i = 0; i < racedata.length; i++){
 		var point1 = new THREE.Vector2(parseInt(racedata[i].split("/")[0].split(",")[0]), parseInt(racedata[i].split("/")[0].split(",")[1]));
