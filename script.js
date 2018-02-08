@@ -2,7 +2,7 @@ var SPEED = 0.004;
 var CAMERA_LAG = 0.9;
 var COLLISION = 1.5;
 var BOUNCE = 0.9;
-const MAP_SCALE = 5;
+var MAP_SCALE = 5;
 var shiny = false;
 
 setTimeout(function(){
