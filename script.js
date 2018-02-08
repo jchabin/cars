@@ -47,6 +47,12 @@ setTimeout(function(){
 	}
 }, 1000);
 
+function forceScroll(){
+	requestAnimationFrame(forceScroll);
+	window.scrollTo(0, 0);
+}
+forceScroll();
+
 //var database = firebase.database();
 
 var camera, renderer, scene, renderer2, scene2, labels = []; 
@@ -99,7 +105,16 @@ var carPos = [
 	{x: 2, y: -3},
 	{x: 0, y: -6},
 	{x: 2, y: -6},
-	{x: -2, y: -6}
+	{x: -2, y: -6},
+	{x: 0, y: -9},
+	{x: 2, y: -9},
+	{x: -2, y: -9},
+	{x: 0, y: -12},
+	{x: -2, y: -12},
+	{x: 2, y: -12},
+	{x: 0, y: -15},
+	{x: 2, y: -15},
+	{x: -2, y: -15}
 ];
 color = Math.floor(Math.random() * 360);
 var f = document.getElementById("fore");
