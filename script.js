@@ -1,8 +1,8 @@
 var SPEED = 0.004;
 var CAMERA_LAG = 0.9;
-var COLLISION = 1.5;
-var BOUNCE = 0.9;
-var mapscale = 7;
+var COLLISION = 0.6;
+var BOUNCE = 0.5;
+var mapscale = 5;
 var shiny = false;
 
 setTimeout(function(){
@@ -307,10 +307,13 @@ function join(){
 	
 	shinymat = new THREE.MeshBasicMaterial({envMap: cubeCamera.renderTarget});
 	
-	var racedata = document.getElementById("trackcode").innerHTML.trim().split(" ");
+	var racedata = document.getElementById("trackcode").innerHTML.trim().split("|")[0].trim().split(" ");
 	var material = new THREE.MeshLambertMaterial({color: new THREE.Color(0xf48342), side: THREE.DoubleSide});
+	//var mapscale = 7;
 	var map = new THREE.Object3D();
 	for(var i = 0; i < racedata.length; i++){
+		if(racedata[i] == "")
+			continue;
 		var point1 = new THREE.Vector2(parseInt(racedata[i].split("/")[0].split(",")[0]), parseInt(racedata[i].split("/")[0].split(",")[1]));
 		var point2 = new THREE.Vector2(parseInt(racedata[i].split("/")[1].split(",")[0]), parseInt(racedata[i].split("/")[1].split(",")[1]));
 		var wall = new THREE.Mesh(
@@ -332,8 +335,10 @@ function join(){
 		new THREE.CylinderBufferGeometry(0, 4, 15),
 		new THREE.MeshLambertMaterial({color: new THREE.Color("#1bad2c")})
 	);
-	var treedata = document.getElementById("trees").innerHTML.trim().split(" ");
+	var treedata = document.getElementById("trackcode").innerHTML.trim().split("|")[2].trim().split(" ");
 	for(var i = 0; i < treedata.length; i++){
+		if(treedata[i] == "")
+			continue;
 		var t = tree.clone();
 		t.position.set(-parseInt(treedata[i].split(",")[0]) * mapscale, 0, parseInt(treedata[i].split(",")[1]) * mapscale);
 		var s = Math.random() + 1;
@@ -342,9 +347,28 @@ function join(){
 	}
 	scene.add(trees);
 	
-	var startdata = document.getElementById("startdata").innerHTML.trim().split(" ");
+	var signs = new THREE.Object3D();
+	var sign = new THREE.Mesh(
+		new THREE.ConeBufferGeometry(0.7, 2, 5),
+		new THREE.MeshLambertMaterial({color: new THREE.Color("#f00")})
+	);
+	var signdata = document.getElementById("trackcode").innerHTML.trim().split("|")[3].trim().split(" ");
+	for(var i = 0; i < signdata.length; i++){
+		if(signdata[i] == "")
+			continue;
+		var s = sign.clone();
+		var da = signdata[i].split("/");
+		s.position.set(-parseFloat(da[0].split(",")[0]) * mapscale, parseFloat(da[0].split(",")[1]), parseFloat(da[0].split(",")[2]) * mapscale);
+		s.rotation.set(Math.PI / 2, parseInt(da[1]) / 180 * Math.PI, 0, "YXZ");
+		signs.add(s);
+	}
+	scene.add(signs);
+	
+	var startdata = document.getElementById("trackcode").innerHTML.trim().split("|")[1].trim().split(" ");
 	var startc = new THREE.Object3D();
 	for(var i = 0; i < startdata.length; i++){
+		if(startdata[i] == "")
+			continue;
 		var point1 = new THREE.Vector2(parseInt(startdata[i].split("/")[0].split(",")[0]), parseInt(startdata[i].split("/")[0].split(",")[1]));
 		var point2 = new THREE.Vector2(parseInt(startdata[i].split("/")[1].split(",")[0]), parseInt(startdata[i].split("/")[1].split(",")[1]));
 		var wall = new THREE.Mesh(
@@ -521,10 +545,12 @@ function join(){
 					}
 					
 					for(var pl in players){
-						if(play != players[pl] && play.model.position.distanceTo(players[pl].model.position) < 1){
+						if(play != players[pl] && play.model.position.distanceTo(players[pl].model.position) < 2){
 							var temp = new THREE.Vector2();
 							temp.x = COLLISION * (players[pl].data.xv - play.data.xv);
 							temp.y = COLLISION * (players[pl].data.yv - play.data.yv);
+							play.data.x -= play.data.xv;
+							play.data.x -= play.data.yv;
 							players[pl].data.xv += COLLISION * (play.data.xv - players[pl].data.xv);
 							players[pl].data.yv += COLLISION * (play.data.yv - players[pl].data.yv);
 							play.data.xv += temp.x;
@@ -536,7 +562,7 @@ function join(){
 						}
 					}
 					
-					if(play.model.position.distanceTo(new THREE.Vector3()) > 150){
+					if(play.model.position.distanceTo(new THREE.Vector3()) > 200){
 						play.data.x = 0;
 						play.data.y = 0;
 					}
@@ -802,4 +828,9 @@ if(mobile){
 		// document.body.innerHTML = angle;
 		me.data.steer = Math.max(Math.min((-angle) / 180 * Math.PI, Math.PI / 6), -Math.PI / 6);
 	}
+}
+
+document.body.onkeydown = function(e){
+	if(e.keyCode == 73 && (e.ctrlKey || e.metaKey))
+		document.getElementById("trackcode").innerHTML = prompt("Track data?")
 }
