@@ -444,13 +444,13 @@ function join(){
 	light.castShadow = true;
 	light.shadow.mapSize.width = 8192;
 	light.shadow.mapSize.height = 8192;
-	light.shadow.camera.near = 100;
+	light.shadow.camera.near = 1000;
 	light.shadow.camera.far = 5000;
 	light.shadow.camera.top = 100;
 	light.shadow.camera.bottom = -100;
 	light.shadow.camera.left = -100;
 	light.shadow.camera.right = 120;
-	light.shadow.bias = 0.00001;
+	light.shadow.bias = 0.00002;
 	scene.add(light);
 	
 	scene.add(new THREE.AmbientLight(0x404040));
