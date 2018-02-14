@@ -313,7 +313,7 @@ function join(){
 	shinymat = new THREE.MeshBasicMaterial({envMap: cubeCamera.renderTarget});
 	
 	var racedata = document.getElementById("trackcode").innerHTML.trim().split("|")[0].trim().split(" ");
-	var material = new THREE.MeshLambertMaterial({color: new THREE.Color(0xf48342), side: THREE.DoubleSide});
+	var material = new THREE.MeshLambertMaterial({color: new THREE.Color(0xf48342)});
 	//var mapscale = 7;
 	var map = new THREE.Object3D();
 	for(var i = 0; i < racedata.length; i++){
@@ -386,7 +386,7 @@ function join(){
 		var point2 = new THREE.Vector2(parseInt(startdata[i].split("/")[1].split(",")[0]), parseInt(startdata[i].split("/")[1].split(",")[1]));
 		var wall = new THREE.Mesh(
 			new THREE.BoxBufferGeometry(point1.distanceTo(point2) * mapscale, 0.1, 1),
-			new THREE.MeshLambertMaterial({color: new THREE.Color(i == 0 ? "#2580db" : "#db2525"), side: THREE.DoubleSide})
+			new THREE.MeshLambertMaterial({color: new THREE.Color(i == 0 ? "#2580db" : "#db2525")})
 		);
 		var angle = Math.atan2((point1.y - point2.y), (point1.x - point2.x));
 		wall.position.set(-(point1.x + point2.x) / 2 * mapscale, 0, (point1.y + point2.y) / 2 * mapscale);
@@ -421,7 +421,7 @@ function join(){
 	
 	var ground = new THREE.Mesh(
 		new THREE.PlaneBufferGeometry(1000, 1000),
-		new THREE.MeshLambertMaterial({color: new THREE.Color(0x57c115), side: THREE.DoubleSide})
+		new THREE.MeshLambertMaterial({color: new THREE.Color(0x57c115)})
 	);
 	ground.rotation.set(-Math.PI / 2, 0, 0);
 	ground.receiveShadow = true;
