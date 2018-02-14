@@ -444,7 +444,7 @@ function join(){
 	light.castShadow = true;
 	light.shadow.mapSize.width = 8192;
 	light.shadow.mapSize.height = 8192;
-	light.shadow.camera.near = 1000;
+	light.shadow.camera.near = 3000;
 	light.shadow.camera.far = 5000;
 	light.shadow.camera.top = 100;
 	light.shadow.camera.bottom = -100;
