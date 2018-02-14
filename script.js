@@ -60,6 +60,10 @@ scene = new THREE.Scene();
 renderer = new THREE.WebGLRenderer();
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.autoUpdate = false;
+renderer.shadowMap.needsUpdate = true;
+//renderer.shadowMap.type = THREE.BasicShadowMap;
 var element = renderer.domElement;
 var shinymat;
 
@@ -213,6 +217,7 @@ host = function(){
 					console.log(label);
 					f.appendChild(label);
 					labels.push(label);
+					pl.model.receiveShadow = true;
 					scene.add(pl.model);
 					
 					if(p.ge.path.n[2] == me.ref.path.n[2]){
@@ -317,7 +322,7 @@ function join(){
 		var point1 = new THREE.Vector2(parseInt(racedata[i].split("/")[0].split(",")[0]), parseInt(racedata[i].split("/")[0].split(",")[1]));
 		var point2 = new THREE.Vector2(parseInt(racedata[i].split("/")[1].split(",")[0]), parseInt(racedata[i].split("/")[1].split(",")[1]));
 		var wall = new THREE.Mesh(
-			new THREE.BoxBufferGeometry(point1.distanceTo(point2) * mapscale, 1.5, 0.3),
+			new THREE.BoxBufferGeometry(point1.distanceTo(point2) * mapscale + 0.3, 1.5, 0.3),
 			material
 		);
 		var angle = Math.atan2((point1.y - point2.y), (point1.x - point2.x));
@@ -326,6 +331,10 @@ function join(){
 		var plane = new THREE.Plane(new THREE.Vector3(0, 0, 1).applyAxisAngle(new THREE.Vector3(0, 1, 0), angle));
 		wall.plane = plane;
 		wall.width = point1.distanceTo(point2) * mapscale;
+		wall.p1 = point1.multiply(new THREE.Vector2(-mapscale, mapscale));
+		wall.p2 = point2.multiply(new THREE.Vector2(-mapscale, mapscale));
+		wall.castShadow = true;
+		wall.receiveShadow = true;
 		map.add(wall);
 	}
 	scene.add(map);
@@ -343,6 +352,8 @@ function join(){
 		t.position.set(-parseInt(treedata[i].split(",")[0]) * mapscale, 0, parseInt(treedata[i].split(",")[1]) * mapscale);
 		var s = Math.random() + 1;
 		t.scale.set(s, s, s);
+		t.castShadow = true;
+		t.receiveShadow = true;
 		trees.add(t);
 	}
 	scene.add(trees);
@@ -360,6 +371,8 @@ function join(){
 		var da = signdata[i].split("/");
 		s.position.set(-parseFloat(da[0].split(",")[0]) * mapscale, parseFloat(da[0].split(",")[1]), parseFloat(da[0].split(",")[2]) * mapscale);
 		s.rotation.set(Math.PI / 2, parseInt(da[1]) / 180 * Math.PI, 0, "YXZ");
+		s.castShadow = true;
+		s.receiveShadow = true;
 		signs.add(s);
 	}
 	scene.add(signs);
@@ -381,6 +394,8 @@ function join(){
 		var plane = new THREE.Plane(new THREE.Vector3(0, 0, 1).applyAxisAngle(new THREE.Vector3(0, 1, 0), angle));
 		wall.plane = plane;
 		wall.width = point1.distanceTo(point2) * mapscale;
+		wall.castShadow = true;
+		wall.receiveShadow = true;
 		startc.add(wall);
 	}
 	scene.add(startc);
@@ -409,6 +424,7 @@ function join(){
 		new THREE.MeshLambertMaterial({color: new THREE.Color(0x57c115), side: THREE.DoubleSide})
 	);
 	ground.rotation.set(-Math.PI / 2, 0, 0);
+	ground.receiveShadow = true;
 	scene.add(ground);
 	
 	for(var i = 0; i < 100; i++){
@@ -424,7 +440,17 @@ function join(){
 	}
 	
 	var light = new THREE.DirectionalLight();
-	light.position.set(1000, 3000, -2000);
+	light.position.set(2000, 2000, -2000);
+	light.castShadow = true;
+	light.shadow.mapSize.width = 8192;
+	light.shadow.mapSize.height = 8192;
+	light.shadow.camera.near = 100;
+	light.shadow.camera.far = 5000;
+	light.shadow.camera.top = 100;
+	light.shadow.camera.bottom = -100;
+	light.shadow.camera.left = -100;
+	light.shadow.camera.right = 120;
+	light.shadow.bias = 0.00001;
 	scene.add(light);
 	
 	scene.add(new THREE.AmbientLight(0x404040));
@@ -506,9 +532,9 @@ function join(){
 					
 					for(var w in map.children){
 						var wall = map.children[w];
-						// console.log(wall.plane.distanceToPoint(play.model.position.clone().sub(wall.position)));
+						var posi = new THREE.Vector2(play.data.x, play.data.y);
 						if(Math.abs(wall.plane.distanceToPoint(play.model.position.clone().sub(wall.position))) < 1){
-							if(wall.position.clone().distanceTo(play.model.position) < wall.width / 2 + 1){
+							if(wall.position.clone().distanceTo(play.model.position) < wall.width / 2 + 0.5){
 								var vel = new THREE.Vector3(play.data.xv, 0, play.data.yv);
 								vel.reflect(wall.plane.normal);
 								play.data.xv = vel.x;
@@ -520,6 +546,38 @@ function join(){
 								play.data.xv *= BOUNCE;
 								play.data.yv *= BOUNCE;
 							}
+						}
+						if(posi.distanceTo(wall.p1) < 1.5){
+							// console.log("o1");
+							var norm = posi.clone().sub(wall.p1);
+							norm = new THREE.Vector3(norm.x, 0, norm.y);
+							norm.normalize();
+							var vel = new THREE.Vector3(play.data.xv, 0, play.data.yv);
+							vel.reflect(norm);
+							play.data.xv = vel.x;
+							play.data.yv = vel.z;
+							while((new THREE.Vector2(play.data.x, play.data.y)).distanceTo(wall.p1) < 1.5){
+								play.data.x += play.data.xv;
+								play.data.y += play.data.yv;
+							}
+							play.data.xv *= BOUNCE;
+							play.data.yv *= BOUNCE;
+						}
+						if(posi.distanceTo(wall.p2) < 1.5){
+							// console.log("o2");
+							var norm = posi.clone().sub(wall.p2);
+							norm = new THREE.Vector3(norm.x, 0, norm.y);
+							norm.normalize();
+							var vel = new THREE.Vector3(play.data.xv, 0, play.data.yv);
+							vel.reflect(norm);
+							play.data.xv = vel.x;
+							play.data.yv = vel.z;
+							while((new THREE.Vector2(play.data.x, play.data.y)).distanceTo(wall.p2) < 1.5){
+								play.data.x += play.data.xv;
+								play.data.y += play.data.yv;
+							}
+							play.data.xv *= BOUNCE;
+							play.data.yv *= BOUNCE;
 						}
 					}
 					
@@ -685,6 +743,7 @@ codeCheck = function(){
 					console.log(label);
 					f.appendChild(label);
 					labels.push(label);
+					pl.model.receiveShadow = true;
 					scene.add(pl.model);
 				}
 				database.ref(code + "/players").on("child_added", function(p){
@@ -725,6 +784,7 @@ codeCheck = function(){
 						console.log(label);
 						f.appendChild(label);
 						labels.push(label);
+						pl.model.receiveShadow = true;
 						scene.add(pl.model);
 						
 						if(p.ge.path.n[2] == me.ref.path.n[2]){
