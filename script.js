@@ -1,7 +1,7 @@
 var SPEED = 0.004;
 var CAMERA_LAG = 0.9;
-var COLLISION = 0.6;
-var BOUNCE = 0.5;
+var COLLISION = 1.1;
+var BOUNCE = 0.7;
 var mapscale = 5;
 var shiny = false;
 
@@ -547,7 +547,7 @@ function join(){
 								play.data.yv *= BOUNCE;
 							}
 						}
-						if(posi.distanceTo(wall.p1) < 1.5){
+						if(posi.distanceTo(wall.p1) < 1.2){
 							// console.log("o1");
 							var norm = posi.clone().sub(wall.p1);
 							norm = new THREE.Vector3(norm.x, 0, norm.y);
@@ -556,14 +556,14 @@ function join(){
 							vel.reflect(norm);
 							play.data.xv = vel.x;
 							play.data.yv = vel.z;
-							while((new THREE.Vector2(play.data.x, play.data.y)).distanceTo(wall.p1) < 1.5){
+							while((new THREE.Vector2(play.data.x, play.data.y)).distanceTo(wall.p1) < 1.2){
 								play.data.x += play.data.xv;
 								play.data.y += play.data.yv;
 							}
 							play.data.xv *= BOUNCE;
 							play.data.yv *= BOUNCE;
 						}
-						if(posi.distanceTo(wall.p2) < 1.5){
+						if(posi.distanceTo(wall.p2) < 1.3){
 							// console.log("o2");
 							var norm = posi.clone().sub(wall.p2);
 							norm = new THREE.Vector3(norm.x, 0, norm.y);
@@ -572,7 +572,7 @@ function join(){
 							vel.reflect(norm);
 							play.data.xv = vel.x;
 							play.data.yv = vel.z;
-							while((new THREE.Vector2(play.data.x, play.data.y)).distanceTo(wall.p2) < 1.5){
+							while((new THREE.Vector2(play.data.x, play.data.y)).distanceTo(wall.p2) < 1.3){
 								play.data.x += play.data.xv;
 								play.data.y += play.data.yv;
 							}
@@ -604,19 +604,32 @@ function join(){
 					
 					for(var pl in players){
 						if(play != players[pl] && play.model.position.distanceTo(players[pl].model.position) < 2){
-							var temp = new THREE.Vector2();
-							temp.x = COLLISION * (players[pl].data.xv - play.data.xv);
-							temp.y = COLLISION * (players[pl].data.yv - play.data.yv);
-							play.data.x -= play.data.xv;
-							play.data.x -= play.data.yv;
-							players[pl].data.xv += COLLISION * (play.data.xv - players[pl].data.xv);
-							players[pl].data.yv += COLLISION * (play.data.yv - players[pl].data.yv);
-							play.data.xv += temp.x;
-							play.data.yv += temp.y;
-							play.data.x += play.data.xv;
-							play.data.y += play.data.yv;
-							players[pl].data.y += play.data.xv;
-							players[pl].data.y += play.data.yv;
+							var ply = players[pl];
+							var temp = new THREE.Vector2(play.data.xv, play.data.yv);
+							var temp2 = new THREE.Vector2(ply.data.xv, ply.data.yv);
+							ply.data.xv -= temp.x;
+							ply.data.yv -= temp.y;
+							play.data.xv -= temp2.x;
+							play.data.yv -= temp2.y;
+							var norm = (new THREE.Vector2(play.data.x, play.data.y)).sub(new THREE.Vector2(ply.data.x, ply.data.y));
+							norm = new THREE.Vector3(norm.x, 0, norm.y);
+							norm.normalize();
+							var vel = new THREE.Vector3(play.data.xv, 0, play.data.yv);
+							var vel2 = new THREE.Vector3(ply.data.xv, 0, ply.data.yv);
+							vel.reflect(norm);
+							vel2.reflect(norm);
+							ply.data.xv += COLLISION * vel2.x;
+							ply.data.yv += COLLISION * vel2.z;
+							play.data.xv += COLLISION * vel.x;
+							play.data.yv += COLLISION * vel.z;
+							ply.data.xv += temp.x;
+							ply.data.yv += temp.y;
+							play.data.xv += temp2.x;
+							play.data.yv += temp2.y;
+							while((new THREE.Vector2(play.data.x, play.data.y)).distanceTo(new THREE.Vector2(ply.data.x, ply.data.y)) < 2){
+								play.data.x += play.data.xv;
+								play.data.y += play.data.yv;
+							}
 						}
 					}
 					
