@@ -440,7 +440,7 @@ function join(){
 	}
 	
 	var light = new THREE.DirectionalLight();
-	light.position.set(2000, 2000, -2000);
+	light.position.set(3000, 2000, -2000);
 	light.castShadow = true;
 	light.shadow.mapSize.width = 4096;
 	light.shadow.mapSize.height = 4096;
