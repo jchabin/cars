@@ -439,11 +439,11 @@ function join(){
 		scene.add(cube);
 	}
 	
-	var light = new THREE.DirectionalLight();
+	var light = new THREE.DirectionalLight(0xffffff, 0.7);
 	light.position.set(3000, 2000, -2000);
 	light.castShadow = true;
-	light.shadow.mapSize.width = 4096;
-	light.shadow.mapSize.height = 4096;
+	light.shadow.mapSize.width = 1024;
+	light.shadow.mapSize.height = 1024;
 	light.shadow.camera.near = 3000;
 	light.shadow.camera.far = 5000;
 	light.shadow.camera.top = 100;
@@ -452,8 +452,9 @@ function join(){
 	light.shadow.camera.right = 120;
 	light.shadow.bias = 0.00002;
 	scene.add(light);
+	scene.add(new THREE.AmbientLight(0xffffff, 0.5));
 	
-	scene.add(new THREE.AmbientLight(0x404040));
+	//scene.add(new THREE.AmbientLight(0x404040));
 	
 	var x = 0;
 	var ray = new THREE.Raycaster();
