@@ -443,7 +443,7 @@ function join(){
 	
 	var light = new THREE.DirectionalLight(0xffffff, 0.7);
 	light.position.set(3000, 2000, -2000);
-	light.castShadow = true;
+	light.castShadow = !mobile;
 	light.shadow.mapSize.width = 2048;
 	light.shadow.mapSize.height = 2048;
 	light.shadow.camera.near = 3000;
