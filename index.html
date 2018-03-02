@@ -14,7 +14,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1">
 		<link href="https://fonts.googleapis.com/css?family=Monoton|Press+Start+2P" rel="stylesheet">
-		<link href="style.css" rel="stylesheet">
+		<link href="style.css?v=1.1" rel="stylesheet">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/86/three.min.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
 		<title>Online Racing Game!</title>
@@ -33,6 +33,6 @@
 		<div class="menuitem title">Choose a color:<br/><div id="colorpicker" ontouchstart="event.touches[0].buttons = 1; this.onmousemove(event.touches[0])" ontouchmove="event.touches[0].buttons = 1; this.onmousemove(event.touches[0])" onmousedown="this.onmousemove(event)" onmousemove="if(event.buttons == 1){ var x = event.clientX - this.getBoundingClientRect().left; x = Math.min(this.clientWidth, Math.max(0, x)); color = Math.floor(x / this.clientWidth * 360); updateColor(); }"><div id="slider"></div></div></div>
 		<div class="menuitem title"><div id="start" onclick="menu2()" ontouchstart="this.click()">Start!</div></div>
 	</div>
-	<script src="script.js"></script>
+	<script src="script.js?v=1.1"></script>
 	</body>
 </html>
