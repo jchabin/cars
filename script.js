@@ -45,7 +45,7 @@ setTimeout(function(){
 		firebase.initializeApp(config, "backup");
 		database = firebase.apps[1].database();
 	}
-}, 1000);
+}, 2000);
 
 function forceScroll(){
 	requestAnimationFrame(forceScroll);
