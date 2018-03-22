@@ -179,7 +179,8 @@ host = function(){
 				
 				database.ref(code).set({
 					status: 0,
-					players: {}
+					players: {},
+					map: document.getElementById("trackcode").innerHTML
 				});
 				
 				database.ref(code + "/players").on("child_added", function(p){
@@ -443,7 +444,7 @@ function join(){
 	
 	var light = new THREE.DirectionalLight(0xffffff, 0.7);
 	light.position.set(3000, 2000, -2000);
-	light.castShadow = !mobile;
+	// light.castShadow = !mobile;
 	light.shadow.mapSize.width = 2048;
 	light.shadow.mapSize.height = 2048;
 	light.shadow.camera.near = 3000;
@@ -869,6 +870,9 @@ codeCheck = function(){
 							countDown.innerHTML = "";
 						}, 4000);
 					}
+				});
+				database.ref(code + "/map").once("value", function(e){
+					document.getElementById("trackcode").innerHTML = e.val();
 				});
 			}else
 				incode.onkeyup = codeCheck;
