@@ -342,7 +342,7 @@ function loadMap(){
 		var point1 = new THREE.Vector2(parseInt(racedata[i].split("/")[0].split(",")[0]), parseInt(racedata[i].split("/")[0].split(",")[1]));
 		var point2 = new THREE.Vector2(parseInt(racedata[i].split("/")[1].split(",")[0]), parseInt(racedata[i].split("/")[1].split(",")[1]));
 		var wall = new THREE.Mesh(
-			new THREE.BoxBufferGeometry(point1.distanceTo(point2) * mapscale + 0.3, 1.5, 0.3),
+			new THREE.BoxBufferGeometry(point1.distanceTo(point2) * mapscale + 0.3, Math.random() + 1.5, 0.3),
 			material
 		);
 		var angle = Math.atan2((point1.y - point2.y), (point1.x - point2.x));
@@ -681,12 +681,12 @@ function join(){
 			
 			var target = new THREE.Vector3(
 				me.model.position.x + Math.sin(-me.model.rotation.y) * 5,
-				2,
+				3,
 				me.model.position.z + -Math.cos(-me.model.rotation.y) * 5
 			);
 			camera.position.set(
 				camera.position.x * Math.pow(CAMERA_LAG, warp) + target.x * (1 - Math.pow(CAMERA_LAG, warp)),
-				2,
+				3,
 				camera.position.z * Math.pow(CAMERA_LAG, warp) + target.z * (1 - Math.pow(CAMERA_LAG, warp))
 			);
 			camera.lookAt(me.model.position);
@@ -733,7 +733,7 @@ function join(){
 		if(VR){
 			var a = camera.rotation.y;
 			controls.update();
-			camera.rotation.y += a;
+			camera.rotation.y += a - Math.PI / 2;
 		}
 		ren.render(scene, camera);
 	}
