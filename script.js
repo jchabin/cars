@@ -4,6 +4,7 @@ var COLLISION = 1.1;
 var BOUNCE = 0.7;
 var mapscale = 5;
 var shiny = false;
+var VR = false;
 
 setTimeout(function(){
 	document.getElementById("title").style.transform = "none";
@@ -60,18 +61,17 @@ scene = new THREE.Scene();
 renderer = new THREE.WebGLRenderer();
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
+var mobile = navigator.userAgent.match("Mobile")!=null||navigator.userAgent.match("Linux;")!=null;
 if(!mobile){
-	renderer.shadowMap.enabled = true;
+	renderer.shadowMap.enabled = false;
 	renderer.shadowMap.autoUpdate = false;
 	renderer.shadowMap.needsUpdate = true;
 	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+	document.getElementById("cardboard").style.display = "none";
+	console.log(mobile);
 }
 var element = renderer.domElement;
 var shinymat;
-
-var mobile = navigator.userAgent.match("Mobile")!=null||navigator.userAgent.match("Linux;")!=null;
-
-
 
 window.ontouchstart = function(e){
 	e.preventDefault();
@@ -137,6 +137,7 @@ menu2 = function(){
 		name = "Nerd with No Name";
 	else
 		name = document.getElementById("name").value;
+	VR = document.getElementById("cardboard").className == "sel";
 	f.style.transform = "translate3d(0, -100vh, 0)";
 	setTimeout(function(){
 		f.innerHTML = "<div class='menuitem title button' id='host' ontouchstart='this.click()' onclick='host()'>Host a game</div><div class='menuitem title button' ontouchstart='this.click()' id='join' onclick='joinGame()'>Join a game</div>";
@@ -161,6 +162,8 @@ host = function(){
 	f.style.transform = "translate3d(0, -100vh, 0)";
 	setTimeout(function(){
 		f.innerHTML = "<div class='info title'>Use this code to join the game!<div id='code'>Loading...</div></div><div id='startgame' class='title' onclick='startGame()' ontouchstart='this.click()'>Start!</div>";
+		if(VR)
+			f.innerHTML += "<div id='divider'></div>";
 		f.appendChild(element);
 		f.style.transform = "none";
 		getCode();
@@ -303,22 +306,36 @@ joinGame = function(){
 	f.style.transform = "translate3d(0, -100vh, 0)";
 	setTimeout(function(){
 		f.innerHTML = "<div class='info title'>Enter a code to join a game!<input id='incode' class='title' onkeyup='codeCheck(event)' ontouchstart='this.focus()'></input></div>";
+		if(VR)
+			f.innerHTML += "<div id='divider'></div>";
 		f.appendChild(element);
 		f.style.transform = "none";
 	}, 1000);
 	join();
 }
 
-function join(){
-	var cubeCamera = new THREE.CubeCamera(1, 100, 128);
-	scene.add(cubeCamera);
-	
-	shinymat = new THREE.MeshBasicMaterial({envMap: cubeCamera.renderTarget});
-	
+var map, trees, signs, startc;
+
+function deleteMap(){
+	while(map.children.length > 0)
+		map.remove(map.children[0]);
+	scene.remove(map);
+	while(trees.children.length > 0)
+		trees.remove(trees.children[0]);
+	scene.remove(trees);
+	while(signs.children.length > 0)
+		signs.remove(signs.children[0]);
+	scene.remove(signs);
+	while(startc.children.length > 0)
+		startc.remove(startc.children[0]);
+	scene.remove(startc);
+}
+
+function loadMap(){
 	var racedata = document.getElementById("trackcode").innerHTML.trim().split("|")[0].trim().split(" ");
 	var material = new THREE.MeshLambertMaterial({color: new THREE.Color(0xf48342)});
 	//var mapscale = 7;
-	var map = new THREE.Object3D();
+	map = new THREE.Object3D();
 	for(var i = 0; i < racedata.length; i++){
 		if(racedata[i] == "")
 			continue;
@@ -342,7 +359,7 @@ function join(){
 	}
 	scene.add(map);
 	
-	var trees = new THREE.Object3D();
+	trees = new THREE.Object3D();
 	var tree = new THREE.Mesh(
 		new THREE.CylinderBufferGeometry(0, 4, 15),
 		new THREE.MeshLambertMaterial({color: new THREE.Color("#1bad2c")})
@@ -361,7 +378,7 @@ function join(){
 	}
 	scene.add(trees);
 	
-	var signs = new THREE.Object3D();
+	signs = new THREE.Object3D();
 	var sign = new THREE.Mesh(
 		new THREE.ConeBufferGeometry(0.7, 2, 5),
 		new THREE.MeshLambertMaterial({color: new THREE.Color("#f00")})
@@ -381,7 +398,7 @@ function join(){
 	scene.add(signs);
 	
 	var startdata = document.getElementById("trackcode").innerHTML.trim().split("|")[1].trim().split(" ");
-	var startc = new THREE.Object3D();
+	startc = new THREE.Object3D();
 	for(var i = 0; i < startdata.length; i++){
 		if(startdata[i] == "")
 			continue;
@@ -402,6 +419,15 @@ function join(){
 		startc.add(wall);
 	}
 	scene.add(startc);
+}
+
+function join(){
+	var cubeCamera = new THREE.CubeCamera(1, 100, 128);
+	scene.add(cubeCamera);
+	
+	shinymat = new THREE.MeshBasicMaterial({envMap: cubeCamera.renderTarget});
+	
+	loadMap();
 	
 	scene.background = new THREE.Color(0x7fb0ff);
 	
@@ -474,6 +500,15 @@ function join(){
 	var ray = new THREE.Raycaster();
 	ray.near = 0;
 	ray.far = 1;
+	
+	var ren = renderer;
+	var controls;
+	if(VR){
+		var effect = new THREE.StereoEffect(renderer);
+		effect.setSize(window.innerWidth, window.innerHeight);
+		ren = effect;
+		controls = new THREE.DeviceOrientationControls(camera);
+	}
 	
 	var lastTime = performance.now();
 	function render(timestamp) {
@@ -673,7 +708,7 @@ function join(){
 		frustum.setFromMatrix(new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
 		for(var i = 0; i < labels.length; i++){
 			var label = labels[i];
-			if(frustum.containsPoint(label.position)){
+			if(frustum.containsPoint(label.position) && !VR){
 				var vec = toXYCoords(label.position);
 				label.style.left = vec.x + "px";
 				label.style.top = vec.y + "px";
@@ -695,8 +730,12 @@ function join(){
 			cubeCamera.position.copy(me.model.position);
 			me.model.visible = true;
 		}
-		
-		renderer.render(scene, camera);
+		if(VR){
+			var a = camera.rotation.y;
+			controls.update();
+			camera.rotation.y += a;
+		}
+		ren.render(scene, camera);
 	}
 	
 	render(performance.now());
@@ -873,6 +912,8 @@ codeCheck = function(){
 				});
 				database.ref(code + "/map").once("value", function(e){
 					document.getElementById("trackcode").innerHTML = e.val();
+					deleteMap();
+					loadMap();
 				});
 			}else
 				incode.onkeyup = codeCheck;
