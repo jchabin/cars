@@ -18,6 +18,9 @@ setTimeout(function(){
 setTimeout(function(){
 	document.getElementsByClassName("menuitem")[2].style.transform = "none";
 }, 1400);
+setTimeout(function(){
+	document.getElementById("cardboard").style.transform = "none";
+}, 1600);
 var connected = false;
 var config = {
 	apiKey: "AIzaSyDiJsMLlix5o9XqPW1EpeBvuA15XNjlR8M",
@@ -29,7 +32,7 @@ var config = {
 };
 firebase.initializeApp(config);
 var database = firebase.database();
-database.ref("/").once("value", function(e){
+database.ref("/testServer").once("value", function(e){
 	connected = true;
 });
 setTimeout(function(){
@@ -389,7 +392,7 @@ function loadMap(){
 			continue;
 		var s = sign.clone();
 		var da = signdata[i].split("/");
-		s.position.set(-parseFloat(da[0].split(",")[0]) * mapscale, parseFloat(da[0].split(",")[1]), parseFloat(da[0].split(",")[2]) * mapscale);
+		s.position.set(-parseFloat(da[0].split(",")[0]) * mapscale, parseFloat(da[0].split(",")[1]) + 1, parseFloat(da[0].split(",")[2]) * mapscale);
 		s.rotation.set(Math.PI / 2, parseInt(da[1]) / 180 * Math.PI, 0, "YXZ");
 		s.castShadow = true;
 		s.receiveShadow = true;
@@ -447,10 +450,14 @@ function join(){
 	camera.lookAt(player.position);
 	
 	scene.add(player);
-	
+	var stripes = new THREE.TextureLoader().load("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQYV2NgYGD4z/D/////AA/6BPwHejn9AAAAAElFTkSuQmCC");
+	stripes.magFilter = THREE.NearestFilter;
+	stripes.wrapS = THREE.RepeatWrapping;
+	stripes.wrapT = THREE.RepeatWrapping;
+	stripes.repeat.set(100, 100);
 	var ground = new THREE.Mesh(
 		new THREE.PlaneBufferGeometry(1000, 1000),
-		new THREE.MeshLambertMaterial({color: new THREE.Color(0x57c115)})
+		new THREE.MeshLambertMaterial({color: new THREE.Color(0x57c115), emissive: new THREE.Color(0x0f0f0f), emissiveMap: stripes})
 	);
 	ground.rotation.set(-Math.PI / 2, 0, 0);
 	ground.receiveShadow = true;
@@ -506,6 +513,7 @@ function join(){
 	if(VR){
 		var effect = new THREE.StereoEffect(renderer);
 		effect.setSize(window.innerWidth, window.innerHeight);
+		effect.setEyeSeparation(0.7);
 		ren = effect;
 		controls = new THREE.DeviceOrientationControls(camera);
 	}
@@ -526,6 +534,9 @@ function join(){
 				if(!(left ^ right))
 					me.data.steer = 0;
 			}
+			if(VR)
+				me.data.steer = camera.rotation.z;
+			me.data.steer = Math.max(-Math.PI / 6, Math.min(Math.PI / 6, me.data.steer));
 			
 			players[me.ref.path.n[2]].data = me.data;
 			
