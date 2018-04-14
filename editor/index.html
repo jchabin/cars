@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- thanks to https://realfavicongenerator.net/ -->
+		<link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="194x194" href="favicons/favicon-194x194.png">
+		<link rel="icon" type="image/png" sizes="192x192" href="favicons/android-chrome-192x192.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+		<link rel="manifest" href="favicons/manifest.json">
+		<link rel="mask-icon" href="favicons/safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="theme-color" content="#ffffff">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1">
+		<link href="style.css" rel="stylesheet">
+		<title>Track Editor</title>
+	</head>
+	<body>
+	<div id="menu">
+		<div class="button selected" onclick="select(0)">Walls</div>
+		<div class="button" onclick="select(1)">Start</div>
+		<div class="button" onclick="select(2)">Trees</div>
+		<div class="button" onclick="select(3)">Arrows</div>
+		<div class="button" onclick="select(4)">Erase</div>
+		<div class="button" onclick="exp()">Export</div>
+		<div class="button big" onclick="help()">?</div>
+	</div>
+	<canvas id="c"></canvas>
+	<div id="help" onclick="this.style.transform='translateY(-100vh)'">
+		<h1>Track-Making Guide</h1>
+		This is a track editor for my <a href="https://jchabin.github.io/cars/">Online Racing Game.</a> There are 4 different things you can place:
+		<p><b>Walls</b>- Just click and drag to make a wall.</p>
+		<p><b>Starting Lines/Checkpoints</b>- Make them the same way as you make walls. When the game uses these, it will make the first one you drew into the starting line, and the second one into the checkpoint. You can only draw one of each. (I mean, you <em>can</em> draw more, but the game won't handle it very well...)</p>
+		<p><b>Trees</b>- Trees are very simple. You just click to place one, or drag to make a whole forest!</p>
+		<p><b>Arrows</b>- Click and drag to make an arrow. You'll notice it's like a wall, but with a fixed length. Whichever way it is "pointing" will be the direction the arrow is facing.</p>
+		The three other buttons aren't objects that can be placed.
+		<p><b>Eraser</b>- You can probably figure out how this one works. The only weird thing is that when you try to erase walls or checkpoints, you don't click on the line itself, you click on the endpoint of the line. There's also <b>Ctrl-Z</b> for undo.</p>
+		<p><b>Export</b>- When you click <b>Export</b>, it opens a new tab with some numbers and symbols on it. You can just press <b>Ctrl-A</b> and <b>Ctrl-C</b> it to copy the whole thing. You use that for importing the map into the game.</p>
+		<p><b>Help</b>- I don't really need to explain this, right? You had to click it to get to this menu...<p>
+		Once you've made a stellar map, you go to the <a href="https://jchabin.github.io/cars/">Online Racing Game</a> website and press <b>Ctrl-I</b> on the main menu. Paste your track code into the prompt, and you're good to go. If you host the game, all other players will also use your map. Good luck, y'all!
+		<p style="text-align: center"><b>Click anywhere in this box to close it.</b></p>
+	</div>
+	<script src="script.js"></script>
+	</body>
+</html>
