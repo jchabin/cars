@@ -116,31 +116,10 @@ input{
 	-webkit-transform: translate(-4.5vmin, -2vmin) scale(1.2);
 	        transform: translate(-4.5vmin, -2vmin) scale(1.2);
 }
-#cardboard::after{
-	content: "";
-	background-image: url("https://jchabin.github.io/cars/cardboard.png");
-	background-size: cover;
-	height: 10vmin;
-	width: 10vmin;
-	position: absolute;
-	bottom: 5vmin;
-	left: 5vmin;
-	-webkit-filter: brightness(2);
-	        filter: brightness(2);
-	transition: -webkit-transform .2s;
-	transition: transform .2s;
-	transition: transform .2s, -webkit-transform .2s;
-}
-#cardboard:hover::after{
-/* 	transform: rotate(360deg); */
-}
-#cardboard.sel{
-	background-color: #62db68;
-}
-#cardboard{
+#settings{
 	height: 20vmin;
 	width: 20vmin;
-	background-color: #db6262;
+	background-color: #6eb0ea;
 	position: absolute;
 	bottom: 2vmin;
 	right: 2vmin;
@@ -153,11 +132,109 @@ input{
 	transition: transform .2s, box-shadow .2s, background .2s, -webkit-transform .2s;
 	-webkit-transform: translate3d(50vw, 0, 0);
 	        transform: translate3d(50vw, 0, 0);
+	z-index: 100;
 }
-#cardboard:hover{
+#settings::after{
+	content: "";
+	background-image: url("https://jchabin.github.io/cars/gear.png");
+	background-size: cover;
+	height: 10vmin;
+	width: 10vmin;
+	position: absolute;
+	bottom: 5vmin;
+	left: 5vmin;
+	-webkit-filter: invert(1);
+	        filter: invert(1);
+	transition: -webkit-transform .2s;
+	transition: transform .2s;
+	transition: transform .2s, -webkit-transform .2s;
+}
+#settings:hover{
+	-webkit-transform: scale(0.9) rotate(45deg) !important;
+	        transform: scale(0.9) rotate(45deg) !important;
+	box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.5);
+}
+#toolbar{
+	width: 22vmin;
+	height: 85vmin;
+	border-radius: 11vmin;
+	background-color: rgba(0, 0, 0, 0.5);
+	position: absolute;
+	right: 1vmin;
+	bottom: 1vmin;
+	-webkit-transform: scaleY(0);
+	        transform: scaleY(0);
+	transition: -webkit-transform .5s;
+	transition: transform .5s;
+	transition: transform .5s, -webkit-transform .5s;
+	-webkit-transform-origin: 50% 87.5%;
+	        transform-origin: 50% 87.5%;
+}
+#toolbar.sel{
+	-webkit-transform: scaleY(1);
+	        transform: scaleY(1);
+}
+.tools{
+	height: 20vmin;
+	width: 20vmin;
+	background-color: #db6262;
+	border-radius: 10vmin;
+	cursor: pointer;
+	transition: box-shadow .2s, background .2s, -webkit-transform .2s;
+	transition: transform .2s, box-shadow .2s, background .2s;
+	transition: transform .2s, box-shadow .2s, background .2s, -webkit-transform .2s;
+	margin: 1vmin;
+	box-shadow: 0 1vmin 2vmin rgba(0, 0, 0, 0.5);
+}
+.tools:hover{
 	-webkit-transform: scale(0.9) !important;
 	        transform: scale(0.9) !important;
 	box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.5);
+}
+.tools::after{
+	content: "";
+	display: inline-block;
+	background-image: url("https://jchabin.github.io/cars/newTrack.png");
+	-webkit-filter: invert(1);
+	        filter: invert(1);
+	background-size: cover;
+	margin-top: 5vmin;
+	height: 10vmin;
+	width: 10vmin;
+	transition: -webkit-transform .2s;
+	transition: transform .2s;
+	transition: transform .2s, -webkit-transform .2s;
+}
+.tools:sel{
+	background-color: #62db68;
+}
+#edit{
+	background-color: #55db8f;
+}
+#cardboard::after{
+	background-image: url("https://jchabin.github.io/cars/cardboard.png");
+	-webkit-filter: brightness(5);
+	        filter: brightness(5);
+}
+#cardboard.sel{
+	background-color: #62db68;
+}
+#cardboard.disabled{
+	background-color: #a3a3a3 !important;
+}
+#cardboard{
+	background-color: #db6262;
+}
+#help{
+	background-color: #9a55db;
+	font-family: Arial;
+	color: white;
+	font-size: 15vmin;
+	text-align: center;
+	line-height: 20vmin;
+}
+#help::after{
+	display: none;
 }
 #start{
 /* 	animation: slideleft 1s -0.25s forwards; */
