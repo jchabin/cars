@@ -19,7 +19,7 @@ setTimeout(function(){
 	document.getElementsByClassName("menuitem")[2].style.transform = "none";
 }, 1400);
 setTimeout(function(){
-	document.getElementById("cardboard").style.transform = "none";
+	document.getElementById("settings").style.transform = "none";
 }, 1600);
 var connected = false;
 var config = {
@@ -33,10 +33,15 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();
 database.ref("/testServer").once("value", function(e){
+	if(connected){
+		database = firebase.apps[0].database();
+		console.log("Just kidding, the original one was working!");
+	}
 	connected = true;
 });
 setTimeout(function(){
 	if(!connected){
+		connected = true;
 		console.log("Regular database not working, using backup database...");
 		config = {
 			apiKey: "AIzaSyCsqpn0aTDqU8ffGVE284fmSEOTK2tOgq8",
@@ -70,7 +75,7 @@ if(!mobile){
 	renderer.shadowMap.autoUpdate = false;
 	renderer.shadowMap.needsUpdate = true;
 	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-	document.getElementById("cardboard").style.display = "none";
+	document.getElementById("cardboard").className += " disabled";
 	console.log(mobile);
 }
 var element = renderer.domElement;
@@ -140,7 +145,7 @@ menu2 = function(){
 		name = "Nerd with No Name";
 	else
 		name = document.getElementById("name").value;
-	VR = document.getElementById("cardboard").className == "sel";
+	VR = document.getElementById("cardboard").className == "tools sel";
 	f.style.transform = "translate3d(0, -100vh, 0)";
 	setTimeout(function(){
 		f.innerHTML = "<div class='menuitem title button' id='host' ontouchstart='this.click()' onclick='host()'>Host a game</div><div class='menuitem title button' ontouchstart='this.click()' id='join' onclick='joinGame()'>Join a game</div>";
