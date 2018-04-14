@@ -127,6 +127,12 @@ input{
 	left: 5vmin;
 	-webkit-filter: brightness(2);
 	        filter: brightness(2);
+	transition: -webkit-transform .2s;
+	transition: transform .2s;
+	transition: transform .2s, -webkit-transform .2s;
+}
+#cardboard:hover::after{
+/* 	transform: rotate(360deg); */
 }
 #cardboard.sel{
 	background-color: #62db68;
@@ -145,10 +151,12 @@ input{
 	transition: box-shadow .2s, background .2s, -webkit-transform .2s;
 	transition: transform .2s, box-shadow .2s, background .2s;
 	transition: transform .2s, box-shadow .2s, background .2s, -webkit-transform .2s;
+	-webkit-transform: translate3d(50vw, 0, 0);
+	        transform: translate3d(50vw, 0, 0);
 }
 #cardboard:hover{
-	-webkit-transform: scale(0.9);
-	        transform: scale(0.9);
+	-webkit-transform: scale(0.9) !important;
+	        transform: scale(0.9) !important;
 	box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.5);
 }
 #start{
