@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- thanks to https://realfavicongenerator.net/ -->
+		<link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="194x194" href="favicons/favicon-194x194.png">
+		<link rel="icon" type="image/png" sizes="192x192" href="favicons/android-chrome-192x192.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+		<link rel="manifest" href="favicons/manifest.json">
+		<link rel="mask-icon" href="favicons/safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="theme-color" content="#ffffff">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1">
+		<title>Help!</title>
+	</head>
+	<body>
+		<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Monoton|Press+Start+2P" rel="stylesheet">
+		<style>
+			.font{
+				font-family: "Nanum Gothic";
+				color: white;
+			}
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				background: repeating-linear-gradient(45deg,
+					hsl(0, 100%, 50%),
+					hsl(60, 100%, 50%) 100vmin,
+					hsl(120, 100%, 50%) 200vmin,
+					hsl(180, 100%, 50%) 400vmin,
+					hsl(240, 100%, 50%) 500vmin,
+					hsl(300, 100%, 50%) 600vmin,
+					hsl(360, 100%, 50%) 700vmin
+				);
+			}
+			#grey{
+				background-color: #333;
+				margin: 5vw;
+				padding: 5vmin;
+				border-radius: 10vmin;
+				box-shadow: 0 0 10vmin black;
+			}
+			.title{
+				font-size: 10vmin;
+				text-align: center;
+				margin: 5vmin;
+			}
+			a{
+				color: white;
+			}
+			.body{
+				padding-left: 10vw;
+				padding-right: 10vw;
+				padding-bottom: 5vmin;
+				font-size: 4vmin;
+				line-height: 6vmin;
+			}
+			.fakebutton{
+				display: inline-block;
+				font-family: "Monoton";
+				font-size: 3vmin;
+				border: 0.5vmin solid white;
+				height: 5vmin;
+				width: 25vmin;
+				line-height: 5vmin;
+				background: rgba(0, 0, 0, 0.5);
+				text-align: center;
+			}
+			.icon{
+				height: 5vmin;
+				vertical-align: middle;
+				filter: contrast(100) invert(1);
+			}
+			.circle{
+				display: inline-block;
+				height: 8vmin;
+				width: 8vmin;
+				border-radius: 100%;
+				text-align: center;
+				line-height: 7.5vmin;
+			}
+		</style>
+		<div id="grey">
+			<div class="title font">What is this?</div>
+			<div class="body font">
+				This is my incredible <a href="https://jchabin.github.io/cars/">Online Racing Game.</a> It's a multiplayer game where you try to complete three laps before the other players. I built it with <a href="https://threejs.org/">three.js</a> and <a href="https://firebase.google.com/">Firebase.</a>
+			</div>
+			<div class="title font">How do I play?</div>
+			<div class="body font">
+				First, type in your name and use the color slider to choose the color of your car. If you want to be in charge of the game, or you want to play alone, click <div class="fakebutton">Host a Game</div> If someone else is hosting the game, press <div class="fakebutton">Join a Game</div> When hosting, have all other players type in your four-letter code to join. If someone else is hosting, type in the code on their screen.
+				<br/>
+				<br/>
+				If you're on a computer, use the left and right arrow keys to steer. Your car will automatically drive forwards. On a phone, with or without VR mode, tilt your phone to steer.
+				<br/>
+				<br/>
+				Be careful not to hit other players!
+			</div>
+			<div class="title font">How does VR mode work?</div>
+			<div class="body font">
+				You need a <a href="https://vr.google.com/cardboard/get-cardboard/">Google Cardboard</a> or similar headset for this to work. To turn on VR mode, open the settings menu <div class="circle" style="background-color: #6eb0ea"><img class="icon" src="https://jchabin.github.io/cars/gear.png"></div> and click the <div class="circle" style="background-color: #db6262"><img class="icon" src="https://jchabin.github.io/cars/cardboard.png"></div> button.
+			</div>
+			<div class="title font">Can I make my own tracks?</div>
+			<div class="body font">
+				Yes you can! Just open the settings menu <div class="circle" style="background-color: #6eb0ea"><img class="icon" src="https://jchabin.github.io/cars/gear.png"></div> and click the <div class="circle" style="background-color: #55db8f"><img class="icon" src="https://jchabin.github.io/cars/newTrack.png"></div> button! The editor has instructions inside.
+			</div>
+			<div class="title font">Help! I just went through the wall!</div>
+			<div class="body font">
+				Yeah... That happens sometimes. I'm working on it. Sorry. If you're stuck outside the map, try to drive to the mountains - it sends you back to the startline.
+			</div>
+		</div>
+	
+		<script>
+			if(Math.floor(Math.random() * 1000) == 0)
+				document.getElementsByClassName("title")[0].innerHTML = "OwO what's this?";
+		</script>
+	</body>
+</html>
