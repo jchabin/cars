@@ -221,6 +221,12 @@ input{
 }
 #cardboard.disabled{
 	background-color: #a3a3a3 !important;
+	cursor: default !important;
+}
+#cardboard.disabled:hover{
+	background-color: #a3a3a3 !important;
+	-webkit-transform: none !important;
+	        transform: none !important;
 }
 #cardboard{
 	background-color: #db6262;
