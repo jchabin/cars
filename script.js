@@ -933,7 +933,7 @@ codeCheck = function(){
 				database.ref(code + "/map").once("value", function(e){
 					document.getElementById("trackcode").innerHTML = e.val();
 					deleteMap();
-					loadMap();
+					eval(loadMap());
 				});
 			}else
 				incode.onkeyup = codeCheck;
