@@ -5,6 +5,8 @@ var BOUNCE = 0.7;
 var mapscale = 5;
 var shiny = false;
 var VR = false;
+var BOUNCE_CORRECT = 0.005;
+var WALL_SIZE = 1.2;
 
 setTimeout(function(){
 	document.getElementById("title").style.transform = "none";
@@ -427,6 +429,7 @@ function loadMap(){
 		startc.add(wall);
 	}
 	scene.add(startc);
+	return document.getElementById("trackcode").innerHTML.trim().split("|")[4];
 }
 
 function join(){
@@ -435,7 +438,7 @@ function join(){
 	
 	shinymat = new THREE.MeshBasicMaterial({envMap: cubeCamera.renderTarget});
 	
-	loadMap();
+	eval(loadMap());
 	
 	scene.background = new THREE.Color(0x7fb0ff);
 	
@@ -588,13 +591,14 @@ function join(){
 					for(var w in map.children){
 						var wall = map.children[w];
 						var posi = new THREE.Vector2(play.data.x, play.data.y);
-						if(Math.abs(wall.plane.distanceToPoint(play.model.position.clone().sub(wall.position))) < 1){
-							if(wall.position.clone().distanceTo(play.model.position) < wall.width / 2 + 0.5){
+						if(Math.abs(wall.plane.distanceToPoint(play.model.position.clone().sub(wall.position))) < WALL_SIZE){
+							if(wall.position.clone().distanceTo(play.model.position) < wall.width / 2 + WALL_SIZE){
 								var vel = new THREE.Vector3(play.data.xv, 0, play.data.yv);
 								vel.reflect(wall.plane.normal);
-								play.data.xv = vel.x;
-								play.data.yv = vel.z;
-								while(Math.abs(wall.plane.distanceToPoint(new THREE.Vector3(play.data.x, 0, play.data.y).sub(wall.position))) < 1){
+								play.data.xv = vel.x + BOUNCE_CORRECT * wall.plane.normal.x * Math.sign(wall.plane.normal.dot(play.model.position.clone().sub(wall.position)));
+								play.data.yv = vel.z + BOUNCE_CORRECT * wall.plane.normal.z * Math.sign(wall.plane.normal.dot(play.model.position.clone().sub(wall.position)));
+								//var dir = Math.normalize();
+								while(Math.abs(wall.plane.distanceToPoint(new THREE.Vector3(play.data.x, 0, play.data.y).sub(wall.position))) < WALL_SIZE){
 									play.data.x += play.data.xv;
 									play.data.y += play.data.yv;
 								}
@@ -602,7 +606,7 @@ function join(){
 								play.data.yv *= BOUNCE;
 							}
 						}
-						if(posi.distanceTo(wall.p1) < 1.2){
+						if(posi.distanceTo(wall.p1) < WALL_SIZE){
 							// console.log("o1");
 							var norm = posi.clone().sub(wall.p1);
 							norm = new THREE.Vector3(norm.x, 0, norm.y);
@@ -611,14 +615,14 @@ function join(){
 							vel.reflect(norm);
 							play.data.xv = vel.x;
 							play.data.yv = vel.z;
-							while((new THREE.Vector2(play.data.x, play.data.y)).distanceTo(wall.p1) < 1.2){
+							while((new THREE.Vector2(play.data.x, play.data.y)).distanceTo(wall.p1) < WALL_SIZE){
 								play.data.x += play.data.xv;
 								play.data.y += play.data.yv;
 							}
 							play.data.xv *= BOUNCE;
 							play.data.yv *= BOUNCE;
 						}
-						if(posi.distanceTo(wall.p2) < 1.3){
+						if(posi.distanceTo(wall.p2) < WALL_SIZE){
 							// console.log("o2");
 							var norm = posi.clone().sub(wall.p2);
 							norm = new THREE.Vector3(norm.x, 0, norm.y);
@@ -627,7 +631,7 @@ function join(){
 							vel.reflect(norm);
 							play.data.xv = vel.x;
 							play.data.yv = vel.z;
-							while((new THREE.Vector2(play.data.x, play.data.y)).distanceTo(wall.p2) < 1.3){
+							while((new THREE.Vector2(play.data.x, play.data.y)).distanceTo(wall.p2) < WALL_SIZE){
 								play.data.x += play.data.xv;
 								play.data.y += play.data.yv;
 							}
