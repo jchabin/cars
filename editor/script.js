@@ -34,7 +34,7 @@ c.lineCap = "round";
 c.lineWidth = 2;
 function drawBG(){
 	c.clearRect(0, 0, width, height);
-	c.strokeStyle="#EEE";
+	c.strokeStyle="#C0C0C0";
 	c.beginPath();
 	for(var x = offset.x - scale; x < width; x += scale){
 		c.moveTo(x, 0);
@@ -233,7 +233,8 @@ function exp(){
 		text += -1 * (arrows[i].y - Math.floor(height / scale / 2)) + "/";
 		text += Math.floor(90 - arrows[i].angle * 180 / Math.PI) + " ";
 	}
-	text += "<br/>"
+	text += "|";
+	text += "<br/>";
 	var win = window.open();
 	win.document.body.innerHTML = text;
 }
@@ -289,5 +290,5 @@ function eraseL(x, y){
 		}
 }
 function help(){
-	document.getElementById("help").style.transform = "none";
+	document.getElementById("help").parentElement.style.transform = "none";
 }
