@@ -37,21 +37,30 @@
 .big{
 	font-size: 24px;
 }
-#help{
-	transform: translateY(-100vh);
-	height: calc(100vh - 160px);
-	width: calc(100vw - 160px);
-	background-color: rgba(0, 0, 0, 0.75);
+#center{
+	line-height: 100vh;
 	position: absolute;
-	top: 80px;
-	left: 80px;
-	cursor: pointer;
+	top: 0;
+	left: 0;
 	transition: transform 0.5s;
-	padding: 20px;
+}
+#help{
+/* 	transform: translateY(-100vh); */
+	width: calc(100vw - 40vmin);
+	background-color: rgba(0, 0, 0, 0.75);
+	margin-left: 20vmin;
+	vertical-align: middle;
+	cursor: pointer;
+	position: relative;
+	padding: 5vmin;
 	box-sizing: border-box;
+	font-size 2vmin;
+	line-height: 1.5;
+	display: inline-block;
 }
 h1{
 	text-align: center;
+	font-size: 5vmin;
 }
 p{
 	margin: 10px;
