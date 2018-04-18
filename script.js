@@ -5,9 +5,11 @@ var BOUNCE = 0.7;
 var mapscale = 5;
 var shiny = false;
 var VR = false;
-var BOUNCE_CORRECT = 0.005;
+var BOUNCE_CORRECT = 0.01;
 var WALL_SIZE = 1.2;
-
+function MODS(){
+	
+}
 setTimeout(function(){
 	document.getElementById("title").style.transform = "none";
 }, 500);
@@ -352,7 +354,7 @@ function loadMap(){
 		var point1 = new THREE.Vector2(parseInt(racedata[i].split("/")[0].split(",")[0]), parseInt(racedata[i].split("/")[0].split(",")[1]));
 		var point2 = new THREE.Vector2(parseInt(racedata[i].split("/")[1].split(",")[0]), parseInt(racedata[i].split("/")[1].split(",")[1]));
 		var wall = new THREE.Mesh(
-			new THREE.BoxBufferGeometry(point1.distanceTo(point2) * mapscale + 0.3, Math.random() + 1.5, 0.3),
+			new THREE.BoxBufferGeometry(point1.distanceTo(point2) * mapscale + 0.3, 1.5, 0.3),
 			material
 		);
 		var angle = Math.atan2((point1.y - point2.y), (point1.x - point2.x));
@@ -592,7 +594,7 @@ function join(){
 						var wall = map.children[w];
 						var posi = new THREE.Vector2(play.data.x, play.data.y);
 						if(Math.abs(wall.plane.distanceToPoint(play.model.position.clone().sub(wall.position))) < WALL_SIZE){
-							if(wall.position.clone().distanceTo(play.model.position) < wall.width / 2 + WALL_SIZE){
+							if(wall.position.clone().distanceTo(play.model.position) < wall.width / 2){
 								var vel = new THREE.Vector3(play.data.xv, 0, play.data.yv);
 								vel.reflect(wall.plane.normal);
 								play.data.xv = vel.x + BOUNCE_CORRECT * wall.plane.normal.x * Math.sign(wall.plane.normal.dot(play.model.position.clone().sub(wall.position)));
@@ -606,32 +608,32 @@ function join(){
 								play.data.yv *= BOUNCE;
 							}
 						}
-						if(posi.distanceTo(wall.p1) < WALL_SIZE){
+						if(posi.distanceTo(wall.p1) < WALL_SIZE + 0.1){
 							// console.log("o1");
 							var norm = posi.clone().sub(wall.p1);
 							norm = new THREE.Vector3(norm.x, 0, norm.y);
 							norm.normalize();
 							var vel = new THREE.Vector3(play.data.xv, 0, play.data.yv);
 							vel.reflect(norm);
-							play.data.xv = vel.x;
-							play.data.yv = vel.z;
-							while((new THREE.Vector2(play.data.x, play.data.y)).distanceTo(wall.p1) < WALL_SIZE){
+							play.data.xv = vel.x + norm.x * BOUNCE_CORRECT * 1;
+							play.data.yv = vel.z + norm.z * BOUNCE_CORRECT * 1;
+							while((new THREE.Vector2(play.data.x, play.data.y)).distanceTo(wall.p1) < WALL_SIZE + 0.1){
 								play.data.x += play.data.xv;
 								play.data.y += play.data.yv;
 							}
 							play.data.xv *= BOUNCE;
 							play.data.yv *= BOUNCE;
 						}
-						if(posi.distanceTo(wall.p2) < WALL_SIZE){
+						if(posi.distanceTo(wall.p2) < WALL_SIZE + 0.1){
 							// console.log("o2");
 							var norm = posi.clone().sub(wall.p2);
 							norm = new THREE.Vector3(norm.x, 0, norm.y);
 							norm.normalize();
 							var vel = new THREE.Vector3(play.data.xv, 0, play.data.yv);
 							vel.reflect(norm);
-							play.data.xv = vel.x;
-							play.data.yv = vel.z;
-							while((new THREE.Vector2(play.data.x, play.data.y)).distanceTo(wall.p2) < WALL_SIZE){
+							play.data.xv = vel.x + norm.x * BOUNCE_CORRECT * 1;
+							play.data.yv = vel.z + norm.z * BOUNCE_CORRECT * 1;
+							while((new THREE.Vector2(play.data.x, play.data.y)).distanceTo(wall.p2) < WALL_SIZE + 0.1){
 								play.data.x += play.data.xv;
 								play.data.y += play.data.yv;
 							}
@@ -756,6 +758,7 @@ function join(){
 			camera.rotation.y += a - Math.PI / 2;
 		}
 		ren.render(scene, camera);
+		MOD();
 	}
 	
 	render(performance.now());
@@ -813,7 +816,7 @@ codeCheck = function(){
 					pl.model.add(w4);
 					var label = document.createElement("DIV");
 					label.className = "label";
-					label.innerHTML = pl.data.name + "<br/>|";
+					label.innerHTML = pl.data.name.substring(0, 50) + "<br/>|";
 					pl.label = label;
 					label.position = pl.model.position;
 					console.log(label);
@@ -854,7 +857,7 @@ codeCheck = function(){
 						pl.model.add(w4);
 						var label = document.createElement("DIV");
 						label.className = "label";
-						label.innerHTML = pl.data.name + "<br/>|";
+						label.innerHTML = pl.data.name.substring(0, 50) + "<br/>|";
 						pl.label = label;
 						label.position = pl.model.position;
 						console.log(label);
