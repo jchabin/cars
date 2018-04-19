@@ -758,7 +758,7 @@ function join(){
 			camera.rotation.y += a - Math.PI / 2;
 		}
 		ren.render(scene, camera);
-		MOD();
+		MODS();
 	}
 	
 	render(performance.now());
