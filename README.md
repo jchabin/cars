@@ -1,4 +1,6 @@
 # cars
 an online racing game im making
-its pretty sick
+
+it's pretty sick
+
 https://jchabin.github.io/cars/
