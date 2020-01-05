@@ -78,6 +78,7 @@ if(mobile)
 	document.body.onclick = function(e){
 		try{DeviceOrientationEvent.requestPermission}catch(error){};
 		document.body.onclick = null;
+		alert("oi");
 	}
 if(!mobile){
 	renderer.shadowMap.enabled = false;
