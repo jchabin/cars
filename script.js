@@ -968,7 +968,7 @@ window.onkeyup = function(e){
 
 if(mobile){
 	window.ondeviceorientation = function(e){
-		var angle = orientation == 0 ? e.gamma : orientation < 0 ? -e.beta : e.beta;
+		var angle = screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).angle == 0 ? e.gamma : screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).angle < 0 ? -e.beta : e.beta;
 		// document.body.innerHTML = angle;
 		me.data.steer = Math.max(Math.min((-angle) / 180 * Math.PI, Math.PI / 6), -Math.PI / 6);
 	}
