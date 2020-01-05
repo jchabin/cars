@@ -145,6 +145,8 @@ updateColor = function(){
 updateColor();
 
 menu2 = function(){
+	if(mobile)
+		DeviceOrientationEvent.requestPermission();
 	if(document.getElementById("name").value == "")
 		name = "Nerd with No Name";
 	else
@@ -972,7 +974,6 @@ if(mobile){
 		// document.body.innerHTML = angle;
 		me.data.steer = Math.max(Math.min((-angle) / 180 * Math.PI, Math.PI / 6), -Math.PI / 6);
 	}
-	DeviceOrientationEvent.requestPermission();
 }
 
 document.body.onkeydown = function(e){
