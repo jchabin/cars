@@ -88,12 +88,12 @@ var shinymat;
 // window.ontouchstart = function(e){
 // 	e.preventDefault();
 // }
-window.ontouchmove = function(e){
-	e.preventDefault();
-}
-window.ontouchend = function(e){
-	e.preventDefault();
-}
+// window.ontouchmove = function(e){
+// 	e.preventDefault();
+// }
+// window.ontouchend = function(e){
+// 	e.preventDefault();
+// }
 // window.onclick = function(e){
 // 	toggleFullScreen();
 // }
