@@ -74,6 +74,11 @@ renderer = new THREE.WebGLRenderer();
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 var mobile = navigator.userAgent.match("Mobile")!=null||navigator.userAgent.match("Linux;")!=null;
+if(mobile)
+	window.onclick = function(){
+		try{DeviceOrientationEvent.requestPermission}catch(error){};
+		window.onclick = null;
+	}
 if(!mobile){
 	renderer.shadowMap.enabled = false;
 	renderer.shadowMap.autoUpdate = false;
