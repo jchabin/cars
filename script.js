@@ -85,9 +85,9 @@ if(!mobile){
 var element = renderer.domElement;
 var shinymat;
 
-window.ontouchstart = function(e){
-	e.preventDefault();
-}
+// window.ontouchstart = function(e){
+// 	e.preventDefault();
+// }
 window.ontouchmove = function(e){
 	e.preventDefault();
 }
