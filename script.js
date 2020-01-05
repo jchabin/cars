@@ -75,9 +75,9 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 var mobile = navigator.userAgent.match("Mobile")!=null||navigator.userAgent.match("Linux;")!=null;
 if(mobile)
-	document.body.onclick = function(e){
+	window.onclick = function(e){
 		try{DeviceOrientationEvent.requestPermission}catch(error){};
-		document.body.onclick = null;
+		window.onclick = null;
 		alert("oi");
 	}
 if(!mobile){
@@ -91,15 +91,15 @@ if(!mobile){
 var element = renderer.domElement;
 var shinymat;
 
-// window.ontouchstart = function(e){
-// 	e.preventDefault();
-// }
-// window.ontouchmove = function(e){
-// 	e.preventDefault();
-// }
-// window.ontouchend = function(e){
-// 	e.preventDefault();
-// }
+window.ontouchstart = function(e){
+	e.preventDefault();
+}
+window.ontouchmove = function(e){
+	e.preventDefault();
+}
+window.ontouchend = function(e){
+	e.preventDefault();
+}
 // window.onclick = function(e){
 // 	toggleFullScreen();
 // }
