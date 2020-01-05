@@ -145,8 +145,6 @@ updateColor = function(){
 updateColor();
 
 menu2 = function(){
-	if(mobile)
-		DeviceOrientationEvent.requestPermission();
 	if(document.getElementById("name").value == "")
 		name = "Nerd with No Name";
 	else
