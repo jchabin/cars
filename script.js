@@ -972,6 +972,7 @@ if(mobile){
 		// document.body.innerHTML = angle;
 		me.data.steer = Math.max(Math.min((-angle) / 180 * Math.PI, Math.PI / 6), -Math.PI / 6);
 	}
+	DeviceOrientationEvent.requestPermission();
 }
 
 document.body.onkeydown = function(e){
