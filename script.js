@@ -82,7 +82,6 @@ if(mobile)
 			alert("bruh");
 		};
 		window.onclick = null;
-		alert("oi");
 	}
 if(!mobile){
 	renderer.shadowMap.enabled = false;
