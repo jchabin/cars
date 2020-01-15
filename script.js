@@ -76,7 +76,11 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 var mobile = navigator.userAgent.match("Mobile")!=null||navigator.userAgent.match("Linux;")!=null;
 if(mobile)
 	window.onclick = function(e){
-		try{DeviceOrientationEvent.requestPermission}catch(error){};
+		try{
+			DeviceOrientationEvent.requestPermission();
+		}catch(error){
+			alert("bruh");
+		};
 		window.onclick = null;
 		alert("oi");
 	}
