@@ -78,6 +78,11 @@ if(mobile)
 	window.onclick = function(e){
 		try{
 			DeviceOrientationEvent.requestPermission();
+			window.ondeviceorientation = function(e){
+				var angle = screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).angle == 0 ? e.gamma : screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).angle < 0 ? -e.beta : e.beta;
+				// document.body.innerHTML = angle;
+				me.data.steer = Math.max(Math.min((-angle) / 180 * Math.PI, Math.PI / 6), -Math.PI / 6);
+			}
 		}catch(error){
 			alert("bruh");
 		};
@@ -976,11 +981,7 @@ window.onkeyup = function(e){
 }
 
 if(mobile){
-	window.ondeviceorientation = function(e){
-		var angle = screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).angle == 0 ? e.gamma : screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).angle < 0 ? -e.beta : e.beta;
-		// document.body.innerHTML = angle;
-		me.data.steer = Math.max(Math.min((-angle) / 180 * Math.PI, Math.PI / 6), -Math.PI / 6);
-	}
+	
 }
 
 document.body.onkeydown = function(e){
