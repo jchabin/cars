@@ -75,17 +75,25 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 var mobile = navigator.userAgent.match("Mobile")!=null||navigator.userAgent.match("Linux;")!=null;
 if(mobile)
-	window.onclick = function(e){
-		try{
-			DeviceOrientationEvent.requestPermission();
-			window.ondeviceorientation = function(e){
-				var angle = screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).angle == 0 ? e.gamma : screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).angle < 0 ? -e.beta : e.beta;
-				// document.body.innerHTML = angle;
-				me.data.steer = Math.max(Math.min((-angle) / 180 * Math.PI, Math.PI / 6), -Math.PI / 6);
-			}
-		}catch(error){
-			alert("bruh");
-		};
+	window.onclick = function(){
+		
+		function reactOrientation(e){
+			var angle = screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).angle == 0 ? e.gamma : screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).angle < 0 ? -e.beta : e.beta;
+			// document.body.innerHTML = angle;
+			me.data.steer = Math.max(Math.min((-angle) / 180 * Math.PI, Math.PI / 6), -Math.PI / 6);
+		}
+		
+		// code stolen/borrowed from https://dev.to/li/how-to-requestpermission-for-devicemotion-and-deviceorientation-events-in-ios-13-46g2
+		
+		// i hope this works
+		
+		if(typeof DeviceOrientationEvent.requestPermission === 'function'){
+			DeviceOrientationEvent.requestPermission().then(permissionState => {
+				if (permissionState === 'granted')
+					window.addEventListener('deviceorientation', reactOrientation);
+			}).catch(console.error);
+    		}else
+			window.addEventListener('deviceorientation', reactOrientation);
 		window.onclick = null;
 	}
 if(!mobile){
