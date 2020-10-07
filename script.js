@@ -11,7 +11,7 @@ function MODS(){
 	
 }
 
-var analyticsConfig = {
+/*var analyticsConfig = {
 	apiKey: "AIzaSyDiJsMLlix5o9XqPW1EpeBvuA15XNjlR8M",
 	authDomain: "car-game-a86b9.firebaseapp.com",
 	databaseURL: "https://car-game-a86b9.firebaseio.com",
@@ -22,7 +22,7 @@ var analyticsConfig = {
 }
 try{
 	firebase.initializeApp(analyticsConfig);
-}catch(e){ console.log(e); }
+}catch(e){ console.log(e); }*/
 
 setTimeout(function(){
 	document.getElementById("title").style.transform = "none";
@@ -50,6 +50,7 @@ var config = {
 };
 firebase.initializeApp(config);
 var database = firebase.database();
+firebase.analytics();
 database.ref("/testServer").once("value", function(e){
 	if(connected){
 		database = firebase.apps[0].database();
