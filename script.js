@@ -238,11 +238,11 @@ host = function(){
 				
 				database.ref(code + "/players").on("child_added", function(p){
 					console.log(p);
-					players[p.ge.path.n[2]] = {
+					players[p.ref_.path.pieces_[2]] = {
 						data: p.val(),
 						model: new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 2))
 					};
-					var pl = players[p.ge.path.n[2]];
+					var pl = players[p.ref_.path.pieces_[2]];
 					pl.model.position.set(pl.data.x, 0.6, pl.data.y);
 					pl.model.material = shiny ? shinymat : new THREE.MeshLambertMaterial({color: new THREE.Color("hsl(" + pl.data.color + ", 100%, 50%)")});
 					var wheel = new THREE.Mesh(
@@ -276,7 +276,7 @@ host = function(){
 					pl.model.receiveShadow = true;
 					scene.add(pl.model);
 					
-					if(p.ge.path.n[2] == me.ref.path.n[2]){
+					if(p.ref_.path.pieces_[2] == me.ref_.path.pieces_[2]){
 						me.label = pl.label;
 						me.model = pl.model;
 						me.label.innerHTML = "";
@@ -285,7 +285,7 @@ host = function(){
 				
 				database.ref(code + "/players").on("child_changed", function(p){
 					// console.log(p);
-					players[p.ge.path.n[2]].data = p.val();
+					players[p.ref_.path.pieces_[2]].data = p.val();
 				});
 				
 				me.ref = database.ref(code + "/players").push();
@@ -586,7 +586,7 @@ function join(){
 				me.data.steer = camera.rotation.z;
 			me.data.steer = Math.max(-Math.PI / 6, Math.min(Math.PI / 6, me.data.steer));
 			
-			players[me.ref.path.n[2]].data = me.data;
+			players[me.ref_.path.pieces_[2]].data = me.data;
 			
 			if(!gameSortaStarted){
 				for(var p in players){
@@ -864,13 +864,13 @@ codeCheck = function(){
 					scene.add(pl.model);
 				}
 				database.ref(code + "/players").on("child_added", function(p){
-					if(typeof players[p.ge.path.n[2]] == "undefined"){
+					if(typeof players[p.ref_.path.pieces_[2]] == "undefined"){
 						console.log(p);
-						players[p.ge.path.n[2]] = {
+						players[p.ref_.path.pieces_[2]] = {
 							data: p.val(),
 							model: new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 2))
 						};
-						var pl = players[p.ge.path.n[2]];
+						var pl = players[p.ref_.path.pieces_[2]];
 						pl.model.position.set(pl.data.x, 0.6, pl.data.y);
 						pl.model.material = shiny ? shinymat : new THREE.MeshLambertMaterial({color: new THREE.Color("hsl(" + pl.data.color + ", 100%, 50%)")});
 						var wheel = new THREE.Mesh(
@@ -904,7 +904,7 @@ codeCheck = function(){
 						pl.model.receiveShadow = true;
 						scene.add(pl.model);
 						
-						if(p.ge.path.n[2] == me.ref.path.n[2]){
+						if(p.ref_.path.pieces_[2] == me.ref.path.pieces_[2]){
 							me.label = pl.label;
 							me.model = pl.model;
 							me.label.innerHTML = "";
@@ -914,7 +914,7 @@ codeCheck = function(){
 				
 				database.ref(code + "/players").on("child_changed", function(p){
 					// console.log(p);
-					players[p.ge.path.n[2]].data = p.val();
+					players[p.ref_.path.pieces_[2]].data = p.val();
 				});
 				console.log("playerCount: " + playerCount);
 				me.ref = database.ref(code + "/players").push();
