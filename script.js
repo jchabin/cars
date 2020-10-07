@@ -18,8 +18,9 @@ var analyticsConfig = {
 	projectId: "car-game-a86b9",
 	storageBucket: "car-game-a86b9.appspot.com",
 	messagingSenderId: "722396856191",
-	appId: "1:722396856191:web:fb5f72917856108a50e44a"
-};
+	appId: "1:722396856191:web:fb5f72917856108a50e44a",
+	measurementId: "placeholder"
+}
 try{
 	firebase.initializeApp(analyticsConfig);
 }catch(e){ console.log(e); }
