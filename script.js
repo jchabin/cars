@@ -11,7 +11,7 @@ function MODS(){
 	
 }
 
-/*var analyticsConfig = {
+var config = {
 	apiKey: "AIzaSyDiJsMLlix5o9XqPW1EpeBvuA15XNjlR8M",
 	authDomain: "car-game-a86b9.firebaseapp.com",
 	databaseURL: "https://car-game-a86b9.firebaseio.com",
@@ -20,9 +20,7 @@ function MODS(){
 	messagingSenderId: "722396856191",
 	appId: "1:722396856191:web:fb5f72917856108a50e44a"
 }
-try{
-	firebase.initializeApp(analyticsConfig);
-}catch(e){ console.log(e); }*/
+
 
 setTimeout(function(){
 	document.getElementById("title").style.transform = "none";
@@ -40,14 +38,14 @@ setTimeout(function(){
 	document.getElementById("settings").style.transform = "none";
 }, 1600);
 var connected = false;
-var config = {
+/*var config = {
 	apiKey: "AIzaSyDiJsMLlix5o9XqPW1EpeBvuA15XNjlR8M",
 	authDomain: "car-game-a86b9.firebaseapp.com",
 	databaseURL: "https://car-game-a86b9.firebaseio.com",
 	projectId: "car-game-a86b9",
 	storageBucket: "car-game-a86b9.appspot.com",
 	messagingSenderId: "722396856191"
-};
+};*/
 firebase.initializeApp(config);
 var database = firebase.database();
 firebase.analytics();
