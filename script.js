@@ -276,7 +276,7 @@ host = function(){
 					pl.model.receiveShadow = true;
 					scene.add(pl.model);
 					
-					if(p.ref_.path.pieces_[2] == me.ref_.path.pieces_[2]){
+					if(p.ref_.path.pieces_[2] == me.ref.path.pieces_[2]){
 						me.label = pl.label;
 						me.model = pl.model;
 						me.label.innerHTML = "";
@@ -586,7 +586,7 @@ function join(){
 				me.data.steer = camera.rotation.z;
 			me.data.steer = Math.max(-Math.PI / 6, Math.min(Math.PI / 6, me.data.steer));
 			
-			players[me.ref_.path.pieces_[2]].data = me.data;
+			players[me.ref.path.pieces_[2]].data = me.data;
 			
 			if(!gameSortaStarted){
 				for(var p in players){
