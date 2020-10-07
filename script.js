@@ -10,6 +10,20 @@ var WALL_SIZE = 1.2;
 function MODS(){
 	
 }
+
+var analyticsConfig = {
+	apiKey: "AIzaSyDiJsMLlix5o9XqPW1EpeBvuA15XNjlR8M",
+	authDomain: "car-game-a86b9.firebaseapp.com",
+	databaseURL: "https://car-game-a86b9.firebaseio.com",
+	projectId: "car-game-a86b9",
+	storageBucket: "car-game-a86b9.appspot.com",
+	messagingSenderId: "722396856191",
+	appId: "1:722396856191:web:fb5f72917856108a50e44a"
+};
+try{
+	firebase.initializeApp(analyticsConfig);
+}catch(e){ console.log(e); }
+
 setTimeout(function(){
 	document.getElementById("title").style.transform = "none";
 }, 500);
