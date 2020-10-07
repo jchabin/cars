@@ -76,7 +76,6 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 var mobile = navigator.userAgent.match("Mobile")!=null||navigator.userAgent.match("Linux;")!=null;
 if(mobile)
 	window.onclick = function(){
-		
 		function reactOrientation(e){
 			var angle = screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).angle == 0 ? e.gamma : screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).angle < 0 ? -e.beta : e.beta;
 			// document.body.innerHTML = angle;
@@ -88,13 +87,17 @@ if(mobile)
 		// i hope this works
 		
 		if(typeof DeviceOrientationEvent.requestPermission === 'function'){
-			DeviceOrientationEvent.requestPermission().then(permissionState => {
+			DeviceOrientationEvent.requestPermission("The game needs to access phone tilt so you can steer your car.").then(permissionState => {
 				if (permissionState === 'granted')
 					window.addEventListener('deviceorientation', reactOrientation);
-			}).catch(console.error);
-    		}else
+				else
+					alert("Permission denied");
+			}).catch(alert);
+    		}else{
 			window.addEventListener('deviceorientation', reactOrientation);
+		}
 		window.onclick = null;
+		document.getElementById("start").ontouchstart = function(){ this.onclick(); }
 	}
 if(!mobile){
 	renderer.shadowMap.enabled = false;
