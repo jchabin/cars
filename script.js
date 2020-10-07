@@ -48,7 +48,9 @@ var connected = false;
 };*/
 firebase.initializeApp(config);
 var database = firebase.database();
-firebase.analytics();
+try{
+	firebase.analytics();
+}catch(e){ console.log("Analytics were blocked :("); }
 database.ref("/testServer").once("value", function(e){
 	if(connected){
 		database = firebase.apps[0].database();
