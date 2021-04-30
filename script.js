@@ -94,7 +94,7 @@ setTimeout(function(){
 			appId: "1:250860288006:web:9df8ed3929e7fceb2d2b87"
 		};
 		firebase.initializeApp(config, "backup2");
-		database = firebase.apps[1].database();
+		database = firebase.apps[2].database();
 		database.ref("/testServer").once("value", function(e){
 			database = firebase.apps[2].database();
 			connected = true;
