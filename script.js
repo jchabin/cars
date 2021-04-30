@@ -60,7 +60,6 @@ database.ref("/testServer").once("value", function(e){
 });
 setTimeout(function(){
 	if(!connected){
-		connected = true;
 		console.log("Regular database not working, using backup database...");
 		config = {
 			apiKey: "AIzaSyCsqpn0aTDqU8ffGVE284fmSEOTK2tOgq8",
@@ -72,12 +71,18 @@ setTimeout(function(){
 		};
 		firebase.initializeApp(config, "backup");
 		database = firebase.apps[1].database();
+		database.ref("/testServer").once("value", function(e){
+			if(connected){
+				database = firebase.apps[1].database();
+				console.log("Just kidding, the backup server was working!");
+			}
+			connected = true;
+		});
 	}
 }, 2000);
 
 setTimeout(function(){
 	if(!connected){
-		connected = true;
 		console.log("Second database not working, using backup database #2...");
 		config = {
 			apiKey: "AIzaSyDNuMPH_bg8Orkndl8Md6lUh_EOS3pitGs",
@@ -90,6 +95,10 @@ setTimeout(function(){
 		};
 		firebase.initializeApp(config, "backup");
 		database = firebase.apps[1].database();
+		database.ref("/testServer").once("value", function(e){
+			database = firebase.apps[2].database();
+			connected = true;
+		});
 	}
 }, 4000);
 
