@@ -75,6 +75,24 @@ setTimeout(function(){
 	}
 }, 2000);
 
+setTimeout(function(){
+	if(!connected){
+		connected = true;
+		console.log("Second database not working, using backup database #2...");
+		config = {
+			apiKey: "AIzaSyDNuMPH_bg8Orkndl8Md6lUh_EOS3pitGs",
+			authDomain: "car-game-backup-2.firebaseapp.com",
+			databaseURL: "https://car-game-backup-2-default-rtdb.firebaseio.com",
+			projectId: "car-game-backup-2",
+			storageBucket: "car-game-backup-2.appspot.com",
+			messagingSenderId: "250860288006",
+			appId: "1:250860288006:web:9df8ed3929e7fceb2d2b87"
+		};
+		firebase.initializeApp(config, "backup");
+		database = firebase.apps[1].database();
+	}
+}, 4000);
+
 function forceScroll(){
 	requestAnimationFrame(forceScroll);
 	window.scrollTo(0, 0);
