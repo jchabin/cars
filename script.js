@@ -102,6 +102,47 @@ setTimeout(function(){
 	}
 }, 4000);
 
+setTimeout(function(){
+	if(!connected){
+		console.log("Third database not working, using backup database #3...");
+		config = {
+			apiKey: "AIzaSyCmfz7RvzLaAo4xIxA-sH3qhXuGQZYMuvE",
+			authDomain: "car-game-backup-3.firebaseapp.com",
+			databaseURL: "https://car-game-backup-3-default-rtdb.firebaseio.com",
+			projectId: "car-game-backup-3",
+			storageBucket: "car-game-backup-3.appspot.com",
+			messagingSenderId: "477326457153",
+			appId: "1:477326457153:web:421821136bcc6a67f149c0"
+		};
+		firebase.initializeApp(config, "backup3");
+		database = firebase.apps[3].database();
+		database.ref("/testServer").once("value", function(e){
+			database = firebase.apps[3].database();
+			connected = true;
+		});
+	}
+}, 6000);
+
+setTimeout(function(){
+	if(!connected){
+		console.log("Fourth database not working, using backup database #4...");
+		config = {
+			apiKey: "AIzaSyAerrEq1YUJNZnvQhZvyRa6LOS9VyhEYvs",
+			authDomain: "car-game-backup-4.firebaseapp.com",
+			projectId: "car-game-backup-4",
+			storageBucket: "car-game-backup-4.appspot.com",
+			messagingSenderId: "802151922986",
+			appId: "1:802151922986:web:69b9ff0ad8778d51da7253"
+		};
+		firebase.initializeApp(config, "backup4");
+		database = firebase.apps[4].database();
+		database.ref("/testServer").once("value", function(e){
+			database = firebase.apps[4].database();
+			connected = true;
+		});
+	}
+}, 8000);
+
 function forceScroll(){
 	requestAnimationFrame(forceScroll);
 	window.scrollTo(0, 0);
