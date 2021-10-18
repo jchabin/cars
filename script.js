@@ -54,7 +54,7 @@ try{
 
 
 database.ref("/testServer").once("value", function(e){
-	if(connected > 0){
+	if(connected < 0 || connected > 0){
 		database = firebase.apps[0].database();
 		connected = 0;
 	}
@@ -71,7 +71,7 @@ config = {
 firebase.initializeApp(config, "backup");
 database = firebase.apps[1].database();
 database.ref("/testServer").once("value", function(e){
-	if(connected > 1){
+	if(connected < 0 || connected > 1){
 		database = firebase.apps[1].database();
 		connected = 1;
 	}
@@ -89,7 +89,7 @@ config = {
 firebase.initializeApp(config, "backup2");
 database = firebase.apps[2].database();
 database.ref("/testServer").once("value", function(e){
-	if(connected > 2){
+	if(connected < 0 || connected > 2){
 		database = firebase.apps[2].database();
 		connected = 2;
 	}
@@ -107,7 +107,7 @@ config = {
 firebase.initializeApp(config, "backup3");
 database = firebase.apps[3].database();
 database.ref("/testServer").once("value", function(e){
-	if(connected > 3){
+	if(connected < 0 || connected > 3){
 		database = firebase.apps[3].database();
 		connected = 3;
 	}
@@ -125,7 +125,7 @@ config = {
 firebase.initializeApp(config, "backup4");
 database = firebase.apps[4].database();
 database.ref("/testServer").once("value", function(e){
-	if(connected < 4){
+	if(connected < 0 || connected > 4){
 		database = firebase.apps[4].database();
 		connected = 4;
 	}
