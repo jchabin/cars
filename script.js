@@ -113,7 +113,6 @@ database.ref("/testServer").once("value", function(e){
 	}
 });
 
-console.log("Fourth database not working, using backup database #4...");
 config = {
 	apiKey: "AIzaSyAerrEq1YUJNZnvQhZvyRa6LOS9VyhEYvs",
 	authDomain: "car-game-backup-4.firebaseapp.com",
