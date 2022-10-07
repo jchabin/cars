@@ -57,10 +57,11 @@ var serverList = [
 	}
 ];
 
-var connected = -1;
+var database, connected = -1;
 for(var i = 0; i < serverList.length; i++){
 	let li = i;
 	firebase.initializeApp(serverList[li], "server" + i);
+	database = firebase.apps[i].database();
 	database.ref("/testServer").once("value", function(e){
 		if(connected < 0 || connected > li){
 			database = firebase.apps[li].database();
