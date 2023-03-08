@@ -68,7 +68,11 @@ for(var i = 0; i < serverList.length; i++){
 				database = firebase.apps[li].database();
 				connected = li;
 			}
+		}, function(e){
+			console.log("A", li, e);
 		});
+	}, function(e){
+		console.log("B", li, e);	
 	});
 }
 
