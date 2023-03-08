@@ -57,26 +57,28 @@ var serverList = [
 	}
 ];
 
-var database, connected = -1;
+var database, connectedN = -1, connectedS = undefined;
 for(var i = 0; i < serverList.length; i++){
+	firebase.initializeApp(serverList[i], "server" + i);
 	let li = i;
-	firebase.initializeApp(serverList[li], "server" + i);
-	firebase.apps[i].auth().signInAnonymously().then(() => {
-		database = firebase.apps[li].database();
+	let la = firebase.apps[i];
+	la.auth().signInAnonymously().then(() => {
+		database = la.database();
 		database.ref("/testServer").once("value", function(e){
-			if(connected >= 0 && connected > li)
-				firebase.apps[connected].delete();
-			if(connected < 0 || connected > li){
-				database = firebase.apps[li].database();
-				connected = li;
+			if(connectedN >= 0 && connectedN > li)
+				connectedS.delete();
+			if(connectedN < 0 || connectedN > li){
+				database = li.database();
+				connectedN = li;
+				connectedS = la;
 			}else{
-				firebase.apps[li].delete();
+				la.delete();
 			}
 		}, function(e){
-			firebase.apps[li].delete();
+			la.delete();
 		});
 	}, function(e){
-		firebase.apps[li].delete();	
+		li.delete();	
 	});
 }
 
