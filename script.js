@@ -64,15 +64,19 @@ for(var i = 0; i < serverList.length; i++){
 	firebase.apps[i].auth().signInAnonymously().then(() => {
 		database = firebase.apps[li].database();
 		database.ref("/testServer").once("value", function(e){
+			if(connected >= 0 && connected > li)
+				firebase.apps[connected].delete();
 			if(connected < 0 || connected > li){
 				database = firebase.apps[li].database();
 				connected = li;
+			}else{
+				firebase.apps[li].delete();
 			}
 		}, function(e){
-			console.log("A", li, e);
+			firebase.apps[li].delete();
 		});
 	}, function(e){
-		console.log("B", li, e);	
+		firebase.apps[li].delete();	
 	});
 }
 
