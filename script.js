@@ -68,7 +68,7 @@ for(var i = 0; i < serverList.length; i++){
 			if(connectedN >= 0 && connectedN > li)
 				connectedS.delete();
 			if(connectedN < 0 || connectedN > li){
-				database = li.database();
+				database = la.database();
 				connectedN = li;
 				connectedS = la;
 			}else{
