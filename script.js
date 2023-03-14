@@ -62,9 +62,13 @@ for(var i = 0; i < serverList.length; i++){
 	firebase.initializeApp(serverList[i], "server" + i);
 	let li = i;
 	let la = firebase.apps[i];
+    	let tm = setTimeout(function(){
+    	    la.delete();
+    	}, 5000);
 	la.auth().signInAnonymously().then(() => {
 		database = la.database();
 		database.ref("/testServer").once("value", function(e){
+            		clearTimeout(tm);
 			if(connectedN >= 0 && connectedN > li)
 				connectedS.delete();
 			if(connectedN < 0 || connectedN > li){
@@ -78,7 +82,7 @@ for(var i = 0; i < serverList.length; i++){
 			la.delete();
 		});
 	}, function(e){
-		li.delete();	
+		la.delete();
 	});
 }
 
