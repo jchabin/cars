@@ -54,6 +54,15 @@ var serverList = [
 		storageBucket: "car-game-backup-4.appspot.com",
 		messagingSenderId: "802151922986",
 		appId: "1:802151922986:web:69b9ff0ad8778d51da7253"
+	},
+	{
+		apiKey: "AIzaSyCdVFLbMypdHR60NqXYs_qSpAdvvgpo9Ig",
+		authDomain: "car-game-backup-5.firebaseapp.com",
+		databaseURL: "https://car-game-backup-5-default-rtdb.firebaseio.com",
+		projectId: "car-game-backup-5",
+		storageBucket: "car-game-backup-5.appspot.com",
+		messagingSenderId: "743331533949",
+		appId: "1:743331533949:web:a724977f309c1583400d14"
 	}
 ];
 
