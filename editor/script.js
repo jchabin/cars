@@ -109,11 +109,11 @@ function select(n){
 }
 
 function gridX(x){
-	return Math.round((x - offset.x) / scale);
+	return Math.round((x * window.devicePixelRatio - offset.x) / scale);
 }
 
 function gridY(x){
-	return Math.round((x - offset.y) / scale);
+	return Math.round((x * window.devicePixelRatio - offset.y) / scale);
 }
 
 ca.onmousedown = function(e){
