@@ -64,6 +64,24 @@ var serverList = [
 		storageBucket: "car-game-backup-5.appspot.com",
 		messagingSenderId: "743331533949",
 		appId: "1:743331533949:web:a724977f309c1583400d14"
+	},
+	{
+		apiKey: "AIzaSyDRmEJMfrk_y1-BLjgaD6ctaDfP8tKSyfA",
+		authDomain: "car-game-backup-6.firebaseapp.com",
+		databaseURL: "https://car-game-backup-6-default-rtdb.firebaseio.com",
+		projectId: "car-game-backup-6",
+		storageBucket: "car-game-backup-6.appspot.com",
+		messagingSenderId: "1025140224576",
+		appId: "1:1025140224576:web:cb239ab3773cb7596125a5"
+	},
+	{
+		apiKey: "AIzaSyA1y6TdFz2F0oahE-HmkA0mTAROlgIytR4",
+		authDomain: "car-game-backup-7.firebaseapp.com",
+		databaseURL: "https://car-game-backup-7-default-rtdb.firebaseio.com",
+		projectId: "car-game-backup-7",
+		storageBucket: "car-game-backup-7.appspot.com",
+		messagingSenderId: "1012238241918",
+		appId: "1:1012238241918:web:d4188393dcd596b6a6882f"
 	}
 ];
 
