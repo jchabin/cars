@@ -247,31 +247,6 @@ renderer = new THREE.WebGLRenderer();
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 var mobile = navigator.userAgent.match("Mobile")!=null||navigator.userAgent.match("Linux;")!=null;
-if(mobile)
-	window.onclick = function(){
-		function reactOrientation(e){
-			var angle = screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).angle == 0 ? e.gamma : screen.msOrientation || screen.mozOrientation || (screen.orientation || {}).angle < 0 ? -e.beta : e.beta;
-			// document.body.innerHTML = angle;
-			me.data.steer = Math.max(Math.min((-angle) / 180 * Math.PI, Math.PI / 6), -Math.PI / 6);
-		}
-		
-		// code stolen/borrowed from https://dev.to/li/how-to-requestpermission-for-devicemotion-and-deviceorientation-events-in-ios-13-46g2
-		
-		// i hope this works
-		
-		if(typeof DeviceOrientationEvent.requestPermission === 'function'){
-			DeviceOrientationEvent.requestPermission("The game needs to access phone tilt so you can steer your car.").then(permissionState => {
-				if (permissionState === 'granted')
-					window.addEventListener('deviceorientation', reactOrientation);
-				else
-					alert("Permission denied");
-			}).catch(alert);
-    		}else{
-			window.addEventListener('deviceorientation', reactOrientation);
-		}
-		window.onclick = null;
-		document.getElementById("start").ontouchstart = function(){ this.onclick(); }
-	}
 if(!mobile){
 	renderer.shadowMap.enabled = false;
 	renderer.shadowMap.autoUpdate = false;
@@ -283,15 +258,15 @@ if(!mobile){
 var element = renderer.domElement;
 var shinymat;
 
-window.ontouchstart = function(e){
-	e.preventDefault();
-}
-window.ontouchmove = function(e){
-	e.preventDefault();
-}
-window.ontouchend = function(e){
-	e.preventDefault();
-}
+// window.ontouchstart = function(e){
+// 	e.preventDefault();
+// }
+// window.ontouchmove = function(e){
+// 	e.preventDefault();
+// }
+// window.ontouchend = function(e){
+// 	e.preventDefault();
+// }
 // window.onclick = function(e){
 // 	toggleFullScreen();
 // }
@@ -343,6 +318,23 @@ updateColor = function(){
 updateColor();
 
 menu2 = function(){
+	if(mobile){
+		function reactOrientation(e){
+			var angle = (screen.msOrientation ?? screen.mozOrientation ?? screen.orientation ?? {}).angle == 0 ? e.gamma : (screen.msOrientation ?? screen.mozOrientation ?? screen.orientation ?? {}).angle < 0 ? -e.beta : e.beta;
+			me.data.steer = Math.max(Math.min((-angle) / 180 * Math.PI, Math.PI / 6), -Math.PI / 6);
+		}
+		
+		if(DeviceOrientationEvent.requestPermission){
+			DeviceOrientationEvent.requestPermission("The game needs to access phone tilt so you can steer your car.").then(permissionState => {
+				if (permissionState === 'granted')
+					window.addEventListener('deviceorientation', reactOrientation);
+				else
+					alert("Permission denied");
+			}).catch(alert);
+    		}else{
+			window.addEventListener('deviceorientation', reactOrientation);
+		}
+	}
 	if(document.getElementById("name").value == "")
 		name = "Nerd with No Name";
 	else
