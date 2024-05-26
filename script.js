@@ -386,14 +386,15 @@ host = function(){
 			code += letters[Math.floor(Math.random() * letters.length)];
 		database.ref(code).once("value", function(codeCheck){
 			console.log(codeCheck.val());
-			if(codeCheck.val() == null || codeCheck.val().status == -1){
+			if(codeCheck.val() == null || codeCheck.val().status == -1 || !codeCheck.val().timestamp || Date.now() - codeCheck.val().timestamp > 1000 * 60 * 60 * 24){ // Allow overwriting a game if it was created more than 24 hours ago - seems safe.
 				console.log(code);
 				document.getElementById("code").innerHTML = code;
 				
 				database.ref(code).set({
 					status: 0,
 					players: {},
-					map: document.getElementById("trackcode").innerHTML
+					map: document.getElementById("trackcode").innerHTML,
+					timestamp: Date.now()
 				});
 				
 				database.ref(code + "/players").on("child_added", function(p){
