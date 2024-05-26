@@ -258,18 +258,6 @@ if(!mobile){
 var element = renderer.domElement;
 var shinymat;
 
-// window.ontouchstart = function(e){
-// 	e.preventDefault();
-// }
-// window.ontouchmove = function(e){
-// 	e.preventDefault();
-// }
-// window.ontouchend = function(e){
-// 	e.preventDefault();
-// }
-// window.onclick = function(e){
-// 	toggleFullScreen();
-// }
 function toggleFullScreen() {
 	var doc = window.document;
 	var docEl = doc.documentElement;
@@ -320,7 +308,7 @@ updateColor();
 menu2 = function(){
 	if(mobile){
 		function reactOrientation(e){
-			var angle = (screen.msOrientation ?? screen.mozOrientation ?? screen.orientation ?? {}).angle == 0 ? e.gamma : (screen.msOrientation ?? screen.mozOrientation ?? screen.orientation ?? {}).angle < 0 ? -e.beta : e.beta;
+			var angle = (screen.msOrientation ?? screen.mozOrientation ?? screen.orientation ?? {}).angle == 0 ? e.gamma : (screen.msOrientation ?? screen.mozOrientation ?? screen.orientation ?? {}).angle < 0 ? e.beta : e.beta;
 			me.data.steer = Math.max(Math.min((-angle) / 180 * Math.PI, Math.PI / 6), -Math.PI / 6);
 		}
 		
