@@ -308,7 +308,7 @@ updateColor();
 menu2 = function(){
 	if(mobile){
 		function reactOrientation(e){
-			var angle = (screen.msOrientation ?? screen.mozOrientation ?? screen.orientation ?? {}).angle == 0 ? e.gamma : (screen.msOrientation ?? screen.mozOrientation ?? screen.orientation ?? {}).angle < 0 ? e.beta : e.beta;
+			var angle = screen.orientation.type == "portait-primary" ? e.gamma : screen.orientation.type == "portrait-secondary" ? -e.gamma : screen.orientation.type == "landscape-primary" ? -e.beta : screen.orientation.type == "landscape-secondary" ? e.beta : 0;
 			me.data.steer = Math.max(Math.min((-angle) / 180 * Math.PI, Math.PI / 6), -Math.PI / 6);
 		}
 		
