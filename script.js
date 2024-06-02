@@ -90,6 +90,11 @@ for(var i = 0; i < serverList.length; i++){
 	firebase.initializeApp(serverList[i], "server" + i);
 	let li = i;
 	let la = firebase.apps[i];
+	if(i == 0){
+		try{
+			la.analytics();
+		}catch{}
+	}
     	let tm = setTimeout(function(){
     	    la.delete();
     	}, 5000);
