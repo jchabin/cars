@@ -143,10 +143,10 @@ setTimeout(function(){
 	document.getElementsByClassName("menuitem")[2].style.transform = "none";
 }, 1400);
 setTimeout(function(){
-	document.getElementById("settings").style.transform = "none";
+	document.getElementById("mywebsitelink").style.transform = "none";
 }, 1600);
 setTimeout(function(){
-	document.getElementById("mywebsitelink").style.transform = "none";
+	document.getElementById("settings").style.transform = "none";
 }, 1800);
 /*var connected = -1;
 /*var config = {
