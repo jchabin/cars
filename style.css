@@ -409,4 +409,5 @@ input{
 	transition: -webkit-transform .5s ease-in-out;
 	transition: transform .5s ease-in-out;
 	transition: transform .5s ease-in-out, -webkit-transform .5s ease-in-out;
+	line-height: 0;
 }
