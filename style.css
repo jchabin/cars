@@ -400,3 +400,8 @@ input{
 	left: calc(50vw - 2px);
 	background-color: white;
 }
+#mywebsitelink{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
