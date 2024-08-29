@@ -145,6 +145,9 @@ setTimeout(function(){
 setTimeout(function(){
 	document.getElementById("settings").style.transform = "none";
 }, 1600);
+setTimeout(function(){
+	document.getElementById("mywebsitelink").style.transform = "none";
+}, 1800);
 /*var connected = -1;
 /*var config = {
 	apiKey: "AIzaSyDiJsMLlix5o9XqPW1EpeBvuA15XNjlR8M",
