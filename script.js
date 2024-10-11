@@ -7,6 +7,8 @@ var shiny = false;
 var VR = false;
 var BOUNCE_CORRECT = 0.01;
 var WALL_SIZE = 1.2;
+var MOUNTAIN_DIST = 250;
+var OOB_DIST = 200;
 function MODS(){
 	
 }
@@ -618,7 +620,7 @@ function loadMap(){
 		startc.add(wall);
 	}
 	scene.add(startc);
-	return document.getElementById("trackcode").innerHTML.trim().split("|")[4];
+	return document.getElementById("trackcode").innerText.trim().split("|")[4];
 }
 
 function join(){
@@ -665,7 +667,7 @@ function join(){
 			new THREE.BoxBufferGeometry(100, 100, 100),
 			new THREE.MeshLambertMaterial({color: new THREE.Color("#888"), side: THREE.DoubleSide})
 		);
-		var dist = Math.random() * 250 + 250;
+		var dist = Math.random() * MOUNTAIN_DIST + MOUNTAIN_DIST;
 		var dir = Math.random() * Math.PI * 2;
 		cube.position.set(dist * Math.sin(dir), 0, dist * Math.cos(dir));
 		cube.rotation.set(Math.random() * Math.PI * 2, Math.random() * Math.PI * 2, Math.random() * Math.PI * 2);
@@ -881,7 +883,7 @@ function join(){
 						}
 					}
 					
-					if(play.model.position.distanceTo(new THREE.Vector3()) > 200){
+					if(play.model.position.distanceTo(new THREE.Vector3()) > OOB_DIST){
 						play.data.x = 0;
 						play.data.y = 0;
 					}
@@ -1159,5 +1161,5 @@ if(mobile){
 
 document.body.onkeydown = function(e){
 	if(e.keyCode == 73 && (e.ctrlKey || e.metaKey))
-		document.getElementById("trackcode").innerHTML = prompt("Track data?")
+		document.getElementById("trackcode").innerText = prompt("Track data?")
 }
