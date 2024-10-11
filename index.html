@@ -40,7 +40,7 @@
 		<div class="menuitem title"><div id="start" onclick="menu2()">Start!</div></div>
 		<div id="settings" onclick="this.parentNode.children[7].className = this.parentNode.children[7].className == 'sel' ? '' : 'sel';"></div>
 		<div id="toolbar">
-			<div class="tools" id="edit" onclick="window.open('editor')"></div>
+			<div class="tools" id="edit" onclick="location.href.includes('index.html') ? window.open('editor/index.html') : window.open('editor')"></div>
 			<div class="tools" id="cardboard" onclick="this.className = this.className == 'tools disabled' ? this.className : this.className == 'tools sel' ? 'tools' : 'tools sel';"></div>
 			<div class="tools" id="help" onclick="window.open('help')">?</div>
 		</div>
