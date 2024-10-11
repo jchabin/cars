@@ -9,6 +9,7 @@ var BOUNCE_CORRECT = 0.01;
 var WALL_SIZE = 1.2;
 var MOUNTAIN_DIST = 250;
 var OOB_DIST = 200;
+var LAPS = 3;
 function MODS(){
 	
 }
@@ -471,7 +472,7 @@ host = function(){
 						f.appendChild(countDown);
 						
 						lap = document.createElement("DIV");
-						lap.innerHTML = "1/3";
+						lap.innerHTML = "1/" + LAPS;
 						lap.className = "title";
 						lap.id = "lap";
 						f.appendChild(lap);
@@ -847,7 +848,7 @@ function join(){
 						}
 					}
 					
-					if(play.data.lap > 3){
+					if(play.data.lap > LAPS && document.getElementById("countdown").innerHTML == ""){
 						document.getElementById("countdown").style.fontSize = "25vmin";
 						document.getElementById("countdown").innerHTML = play.data.name + " Won!";
 					}
@@ -904,7 +905,7 @@ function join(){
 			
 			me.ref.set(me.data);
 			
-			lap.innerHTML = me.data.lap <= 3 ? me.data.lap + "/3" : "";
+			lap.innerHTML = me.data.lap <= LAPS ? me.data.lap + "/" + LAPS : "";
 		}else{
 			camera.position.set(50 * Math.sin(x), 20, 50 * Math.cos(x));
 			camera.lookAt(player.position);
