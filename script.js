@@ -3,7 +3,6 @@ var CAMERA_LAG = 0.9;
 var COLLISION = 1.1;
 var BOUNCE = 0.7;
 var mapscale = 5;
-var shiny = false;
 var VR = false;
 var BOUNCE_CORRECT = 0.01;
 var WALL_SIZE = 1.2;
@@ -267,7 +266,6 @@ if(!mobile){
 	console.log(mobile);
 }
 var element = renderer.domElement;
-var shinymat;
 
 function toggleFullScreen() {
 	var doc = window.document;
@@ -396,10 +394,10 @@ host = function(){
 					};
 					var pl = players[p.ref_.path.pieces_[2]];
 					pl.model.position.set(pl.data.x, 0.6, pl.data.y);
-					pl.model.material = shiny ? shinymat : new THREE.MeshLambertMaterial({color: new THREE.Color("hsl(" + pl.data.color + ", 100%, 50%)")});
+					pl.model.material = new THREE.MeshLambertMaterial({color: new THREE.Color("hsl(" + pl.data.color + ", 100%, 50%)")});
 					var wheel = new THREE.Mesh(
 						new THREE.CylinderBufferGeometry(0.5, 0.5, 0.2, 10),
-						shiny ? shinymat : new THREE.MeshLambertMaterial({color: new THREE.Color("#222")})
+						new THREE.MeshLambertMaterial({color: new THREE.Color("#222")})
 					);
 					var w1 = wheel.clone();
 					w1.position.set(0.6, -0.1, 0.7);
@@ -516,7 +514,7 @@ joinGame = function(){
 	join();
 }
 
-var map, trees, signs, startc;
+var map, trees, signs, startc, main;
 
 function deleteMap(){
 	while(map.children.length > 0)
@@ -531,6 +529,9 @@ function deleteMap(){
 	while(startc.children.length > 0)
 		startc.remove(startc.children[0]);
 	scene.remove(startc);
+	while(main.children.length > 0)
+		main.remove(main.children[0]);
+	scene.remove(main);
 }
 
 function loadMap(){
@@ -621,15 +622,39 @@ function loadMap(){
 		startc.add(wall);
 	}
 	scene.add(startc);
+
+	main = new THREE.Object3D();
+
+	var stripes = new THREE.TextureLoader().load("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQYV2NgYGD4z/D/////AA/6BPwHejn9AAAAAElFTkSuQmCC");
+	stripes.magFilter = THREE.NearestFilter;
+	stripes.wrapS = THREE.RepeatWrapping;
+	stripes.wrapT = THREE.RepeatWrapping;
+	stripes.repeat.set(100, 100);
+	var ground = new THREE.Mesh(
+		new THREE.PlaneBufferGeometry(1000, 1000),
+		new THREE.MeshLambertMaterial({color: new THREE.Color(0x57c115), emissive: new THREE.Color(0x0f0f0f), emissiveMap: stripes})
+	);
+	ground.rotation.set(-Math.PI / 2, 0, 0);
+	ground.receiveShadow = true;
+	main.add(ground);
+	
+	for(var i = 0; i < 100; i++){
+		var cube = new THREE.Mesh(
+			new THREE.BoxBufferGeometry(100, 100, 100),
+			new THREE.MeshLambertMaterial({color: new THREE.Color("#888"), side: THREE.DoubleSide})
+		);
+		var dist = Math.random() * MOUNTAIN_DIST + MOUNTAIN_DIST;
+		var dir = Math.random() * Math.PI * 2;
+		cube.position.set(dist * Math.sin(dir), 0, dist * Math.cos(dir));
+		cube.rotation.set(Math.random() * Math.PI * 2, Math.random() * Math.PI * 2, Math.random() * Math.PI * 2);
+		main.add(cube);
+	}
+	scene.add(main);
+
 	return document.getElementById("trackcode").innerText.trim().split("|")[4];
 }
 
 function join(){
-	var cubeCamera = new THREE.CubeCamera(1, 100, 128);
-	scene.add(cubeCamera);
-	
-	shinymat = new THREE.MeshBasicMaterial({envMap: cubeCamera.renderTarget});
-	
 	eval(loadMap());
 	
 	scene.background = new THREE.Color(0x7fb0ff);
@@ -650,30 +675,6 @@ function join(){
 	camera.lookAt(player.position);
 	
 	scene.add(player);
-	var stripes = new THREE.TextureLoader().load("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQYV2NgYGD4z/D/////AA/6BPwHejn9AAAAAElFTkSuQmCC");
-	stripes.magFilter = THREE.NearestFilter;
-	stripes.wrapS = THREE.RepeatWrapping;
-	stripes.wrapT = THREE.RepeatWrapping;
-	stripes.repeat.set(100, 100);
-	var ground = new THREE.Mesh(
-		new THREE.PlaneBufferGeometry(1000, 1000),
-		new THREE.MeshLambertMaterial({color: new THREE.Color(0x57c115), emissive: new THREE.Color(0x0f0f0f), emissiveMap: stripes})
-	);
-	ground.rotation.set(-Math.PI / 2, 0, 0);
-	ground.receiveShadow = true;
-	scene.add(ground);
-	
-	for(var i = 0; i < 100; i++){
-		var cube = new THREE.Mesh(
-			new THREE.BoxBufferGeometry(100, 100, 100),
-			new THREE.MeshLambertMaterial({color: new THREE.Color("#888"), side: THREE.DoubleSide})
-		);
-		var dist = Math.random() * MOUNTAIN_DIST + MOUNTAIN_DIST;
-		var dir = Math.random() * Math.PI * 2;
-		cube.position.set(dist * Math.sin(dir), 0, dist * Math.cos(dir));
-		cube.rotation.set(Math.random() * Math.PI * 2, Math.random() * Math.PI * 2, Math.random() * Math.PI * 2);
-		scene.add(cube);
-	}
 	
 	var light = new THREE.DirectionalLight(0xffffff, 0.7);
 	light.position.set(3000, 2000, -2000);
@@ -935,13 +936,6 @@ function join(){
 			onWindowResize();
 		}
 		
-		if(shiny){
-			me.model.material = shinymat;
-			me.model.visible = false;
-			cubeCamera.updateCubeMap(renderer, scene);
-			cubeCamera.position.copy(me.model.position);
-			me.model.visible = true;
-		}
 		if(VR){
 			var a = camera.rotation.y;
 			controls.update();
@@ -983,10 +977,10 @@ codeCheck = function(){
 					};
 					var pl = players[p];
 					pl.model.position.set(pl.data.x, 0.6, pl.data.y);
-					pl.model.material = shiny ? shinymat : new THREE.MeshLambertMaterial({color: new THREE.Color("hsl(" + pl.data.color + ", 100%, 50%)")});
+					pl.model.material = new THREE.MeshLambertMaterial({color: new THREE.Color("hsl(" + pl.data.color + ", 100%, 50%)")});
 					var wheel = new THREE.Mesh(
 						new THREE.CylinderBufferGeometry(0.5, 0.5, 0.2, 10),
-						shiny ? shinymat : new THREE.MeshLambertMaterial({color: new THREE.Color("#222")})
+						new THREE.MeshLambertMaterial({color: new THREE.Color("#222")})
 					);
 					var w1 = wheel.clone();
 					w1.position.set(0.6, -0.1, 0.7);
@@ -1024,10 +1018,10 @@ codeCheck = function(){
 						};
 						var pl = players[p.ref_.path.pieces_[2]];
 						pl.model.position.set(pl.data.x, 0.6, pl.data.y);
-						pl.model.material = shiny ? shinymat : new THREE.MeshLambertMaterial({color: new THREE.Color("hsl(" + pl.data.color + ", 100%, 50%)")});
+						pl.model.material = new THREE.MeshLambertMaterial({color: new THREE.Color("hsl(" + pl.data.color + ", 100%, 50%)")});
 						var wheel = new THREE.Mesh(
 							new THREE.CylinderBufferGeometry(0.5, 0.5, 0.2, 10),
-							shiny ? shinymat : new THREE.MeshLambertMaterial({color: new THREE.Color("#222")})
+							new THREE.MeshLambertMaterial({color: new THREE.Color("#222")})
 						);
 						var w1 = wheel.clone();
 						w1.position.set(0.6, -0.1, 0.7);
