@@ -18,7 +18,7 @@
 	</head>
 	<body>
 		<div id="center">
-			<div id="help" onclick="this.parentElement.style.transform='translateY(-100vh)'">
+			<div id="help" onclick="this.parentElement.style.transform='translateY(-200vh)'">
 				<h1>Track-Making Guide</h1>
 				<br/>
 				This is a track editor for my <a href="https://jchabin.github.io/cars/">Online Racing Game.</a> There are 4 different things you can place:
@@ -40,7 +40,9 @@
 			<div class="button" onclick="select(2)">Trees</div>
 			<div class="button" onclick="select(3)">Arrows</div>
 			<div class="button" onclick="select(4)">Erase</div>
+			<div class="button" onclick="imp()">Import</div>
 			<div class="button" onclick="exp()">Export</div>
+			<div class="button" onclick="dedupTrees()">T-Dedup</div>
 			<div class="button big" onclick="help()">?</div>
 		</div>
 		<canvas id="c"></canvas>

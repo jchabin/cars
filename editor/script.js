@@ -207,6 +207,78 @@ ca.onmouseup = function(e){
 	//console.log(hist);
 }
 
+function imp(){
+	var text = prompt("Track data?").trim().split("|");
+	
+	if(!text || text.length < 4)
+		return;
+
+	var wallsText = text[0].split(" ");
+	var startText = text[1].split(" ");
+	var treesText = text[2].split(" ");
+	var arrowsText = text[3].split(" ");
+
+	walls = [];
+	for(var i = 0; i < wallsText.length; i++){
+		var t = wallsText[i].split("/");
+		if(t.length < 2)
+			continue;
+
+		walls.push({
+			start: {
+				x: parseInt(t[0].split(",")[0]) + Math.floor(width / scale / 2),
+				y: -parseInt(t[0].split(",")[1]) + Math.floor(height / scale / 2)
+			},
+			end: {
+				x: parseInt(t[1].split(",")[0]) + Math.floor(width / scale / 2),
+				y: -parseInt(t[1].split(",")[1]) + Math.floor(height / scale / 2)
+			}
+		});
+	}
+
+	start = [];
+	for(var i = 0; i < startText.length; i++){
+		var t = startText[i].split("/");
+		if(t.length < 2)
+			continue;
+
+		start.push({
+			start: {
+				x: parseInt(t[0].split(",")[0]) + Math.floor(width / scale / 2),
+				y: -parseInt(t[0].split(",")[1]) + Math.floor(height / scale / 2)
+			},
+			end: {
+				x: parseInt(t[1].split(",")[0]) + Math.floor(width / scale / 2),
+				y: -parseInt(t[1].split(",")[1]) + Math.floor(height / scale / 2)
+			}
+		});
+	}
+
+	trees = [];
+	for(var i = 0; i < treesText.length; i++){
+		if(treesText[i].trim().length == 0)
+			continue;
+
+		trees.push({
+			x: parseInt(treesText[i].split(",")[0]) + Math.floor(width / scale / 2),
+			y: -parseInt(treesText[i].split(",")[1]) + Math.floor(height / scale / 2)
+		});
+	}
+
+	arrows = [];
+	for(var i = 0; i < arrowsText.length; i++){
+		var t = arrowsText[i].split("/");
+		if(t.length < 2)
+			continue;
+
+		arrows.push({
+			x: parseInt(t[0].split(",")[0]) + Math.floor(width / scale / 2),
+			y: -parseInt(t[0].split(",")[2]) + Math.floor(height / scale / 2),
+			angle: (90 - parseInt(t[1])) * Math.PI / 180
+		});
+	}
+}
+
 function exp(){
 	var text = "";
 	for(var i = 0; i < walls.length; i++){
@@ -291,4 +363,20 @@ function eraseL(x, y){
 }
 function help(){
 	document.getElementById("help").parentElement.style.transform = "none";
+}
+
+function dedupTrees(){
+	var poss = [];
+
+	for(var i = 0; i < trees.length; i++){
+		for(var n = 0; n < poss.length; n++){
+			if(poss[n].x == trees[i].x && poss[n].y == trees[i].y){
+				console.log(i);
+				trees.splice(i--, 1);
+				break;
+			}
+		}
+		
+		poss.push(trees[i]);
+	}
 }
