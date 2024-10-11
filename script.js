@@ -419,7 +419,7 @@ host = function(){
 					pl.model.add(w4);
 					var label = document.createElement("DIV");
 					label.className = "label";
-					label.innerHTML = pl.data.name + "<br/>|";
+					label.innerHTML = pl.data.name.replaceAll("<", "&lt;") + "<br/>|";
 					pl.label = label;
 					label.position = pl.model.position;
 					console.log(label);
@@ -637,7 +637,7 @@ function join(){
 	camera = new THREE.PerspectiveCamera(
 		90,
 		window.innerWidth / window.innerHeight,
-		0.01,
+		1,
 		1000
 	);
 	
@@ -850,7 +850,7 @@ function join(){
 					
 					if(play.data.lap > LAPS && document.getElementById("countdown").innerHTML == ""){
 						document.getElementById("countdown").style.fontSize = "25vmin";
-						document.getElementById("countdown").innerHTML = play.data.name + " Won!";
+						document.getElementById("countdown").innerHTML = play.data.name.replaceAll("<", "&lt;") + " Won!";
 					}
 					
 					for(var pl in players){
@@ -1006,7 +1006,7 @@ codeCheck = function(){
 					pl.model.add(w4);
 					var label = document.createElement("DIV");
 					label.className = "label";
-					label.innerHTML = pl.data.name.substring(0, 50) + "<br/>|";
+					label.innerHTML = pl.data.name.replaceAll("<", "&lt;").substring(0, 50) + "<br/>|";
 					pl.label = label;
 					label.position = pl.model.position;
 					console.log(label);
@@ -1047,7 +1047,7 @@ codeCheck = function(){
 						pl.model.add(w4);
 						var label = document.createElement("DIV");
 						label.className = "label";
-						label.innerHTML = pl.data.name.substring(0, 50) + "<br/>|";
+						label.innerHTML = pl.data.name.replaceAll("<", "&lt;").substring(0, 50) + "<br/>|";
 						pl.label = label;
 						label.position = pl.model.position;
 						console.log(label);
