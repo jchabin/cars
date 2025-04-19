@@ -401,6 +401,8 @@ input{
 	background-color: white;
 }
 #mywebsitelink{
+	display: none;
+	
 	position: absolute;
 	bottom: 0;
 	left: 0;
